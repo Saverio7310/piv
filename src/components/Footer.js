@@ -1,7 +1,7 @@
 function Footer() {
     return (
         <footer>
-            <h1>Footer component</h1>
+            <h1>Sito in costruzione</h1>
         </footer>
     );
 }
