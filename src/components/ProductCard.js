@@ -5,18 +5,19 @@ import { useNavigate } from "react-router-dom";
 function ProductCard({ product }) {
     const navigate = useNavigate();
 
-    const { name, description, quantity, key } = product;
+    /* const { name, description, quantity, key } = product; */
+    const { title, userId, id } = product;
 
     function handleClick() {
-        navigate(`/products/${name}`, { state: { product: { ...product, testProdImg } } });
+        navigate(`/products/${title}`, { state: { product: { ...product, testProdImg } } });
     }
 
     return (
-        <div key={key} className="product-card" onClick={handleClick}>
+        <div key={id * userId} className="product-card" onClick={handleClick}>
             <img src={testProdImg} alt='Product' className='product-card-image' />
-            <h1>Product name: {name}</h1>
-            <h2>Desc: {description}</h2>
-            <h2>quantity: {quantity}</h2>
+            <h1>Product name: {title}</h1>
+            <h2>Desc: {userId + ' - ' + id}</h2>
+            {/* <h2>quantity: {quantity}</h2> */}
         </div>
     );
 }

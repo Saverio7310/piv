@@ -12,7 +12,7 @@ function createTestData(numberOfElements){
         element.name = `Prod${i}`;
         element.description = `Prod${i} description`;
         element.quantity = i;
-        element.key = `${i}`;
+        element.id = `${i}`;
         testData.push(element);
     }
     return testData;
