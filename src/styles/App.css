@@ -178,7 +178,7 @@ footer {
 .products-list-page {
     display: grid;
     grid-template-columns: repeat(auto-fit, 22vw);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
     justify-content: space-around;
     gap: 20px;
     padding: 20px;
