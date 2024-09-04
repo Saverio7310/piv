@@ -4,7 +4,7 @@ import SessionStorage from '../utils/sessionStorage.js';
 
 import { useLocation, Link } from "react-router-dom";
 
-function ProductsListPage({paths}) {
+function ProductsListPage() {
     const [productsFetched, setProductsFetched] = useState([]);
     const [iteration, setIteration] = useState(1);
     const preloadingData = useRef(true);
@@ -32,8 +32,8 @@ function ProductsListPage({paths}) {
             /**
              * The fetchResult is used to understand whether there are still products
              * to fetch or not
-             */ 
-            if(fetchResult && percentage >= 70 && !limitReached.current) {
+             */
+            if (fetchResult && percentage >= 70 && !limitReached.current) {
                 setIteration(i => i + 1);
                 limitReached.current = true;
             }
@@ -63,7 +63,7 @@ function ProductsListPage({paths}) {
         console.log('Effect starting - Preloading');
         const data = SessionStorage.getProductList();
         if (data) {
-            if(data.searchQuery === searchQuery && preloadingData.current) {
+            if (data.searchQuery === searchQuery && preloadingData.current) {
                 console.log('Session data', data);
                 preloadingData.current = false
                 canFetch.current = false
@@ -73,9 +73,9 @@ function ProductsListPage({paths}) {
                 setProductsFetched([]);
                 SessionStorage.clearProductList();
             }
-        } 
+        }
     }, [searchQuery, setIteration]);
-    
+
     /**
      * Fetching of the data if the conditions are right:
      * - if there is some data not to be loaded form sessionStorage
@@ -86,13 +86,13 @@ function ProductsListPage({paths}) {
         const signal = controller.signal;
         console.log('Effect starting - fetch');
         console.log('Iteration value', iteration);
-        
+
         async function fetchData() {
             try {
                 const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${iteration}`, { signal });
                 const data = await response.json();
                 //console.log('Fetched data', data);
-                if(data.length === 0)
+                if (data.length === 0)
                     return;
                 setProductsFetched((prevProds) => {
                     return prevProds.concat(data);
@@ -108,14 +108,14 @@ function ProductsListPage({paths}) {
             }
         }
 
-        if(canFetch.current) {
+        if (canFetch.current) {
             console.log('Fetching data');
             fetchData()
         } else {
             console.log('Didn\'t fetch data');
             canFetch.current = true;
         }
-        
+
         return () => {
             try {
                 controller.abort();
@@ -131,12 +131,12 @@ function ProductsListPage({paths}) {
             dummyElement.style.position = 'absolute';
             dummyElement.style.top = `${targetPixelPosition}px`;
             document.body.appendChild(dummyElement);
-          
+
             dummyElement.scrollIntoView({ behavior: 'smooth' });
-          
+
             // Remove the dummy element after scrolling
             document.body.removeChild(dummyElement);
-          }
+        }
         const timeOut = setTimeout(() => {
             smoothScrollTo(SessionStorage.getValue(SessionStorage.pageYcoordKey));
             //SessionStorage.removeValue(SessionStorage.pageYcoordKey);

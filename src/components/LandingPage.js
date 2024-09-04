@@ -1,4 +1,5 @@
 function LandingPage() {
+    console.log('Landing page');
     const landingPageTitle = `Prezzi In Vista`;
     const landingPageDesc = `Descrizione da definire`;
     const landingPageHelp = `Maybe some images for reference`;

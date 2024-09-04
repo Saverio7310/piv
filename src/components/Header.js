@@ -5,7 +5,7 @@ import '../styles/App.css'
 
 import { Link, useNavigate } from 'react-router-dom';
 
-function createTestData(numberOfElements){
+function createTestData(numberOfElements) {
     const testData = [];
     for (let i = 1; i <= numberOfElements; i++) {
         const element = {};
@@ -26,7 +26,7 @@ function Header() {
         event.preventDefault();
         setInput('');
         const testData = createTestData(30);
-        navigate('/products', {state: { products: testData, searchQuery: input} });
+        navigate('/products', { state: { products: testData, searchQuery: input } });
     };
 
     return (
@@ -37,12 +37,12 @@ function Header() {
             <div className="search-bar">
                 <form onSubmit={handleSubmit}>
                     <div className='search-bar-form-div'>
-                        <input 
-                            className='search-bar-input' 
-                            type="text" 
-                            placeholder="Cerca un prodotto" 
-                            value={input} 
-                            onChange={(e) => setInput(e.target.value)} 
+                        <input
+                            className='search-bar-input'
+                            type="text"
+                            placeholder="Cerca un prodotto"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
                         />
                         <button className='search-bar-icon-button' type='submit'>
                             <img className='search-bar-icon' src={lensLogo} alt='Search button'></img>

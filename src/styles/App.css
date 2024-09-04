@@ -184,12 +184,12 @@ footer {
     padding: 20px;
 }
 
-.product-list-page-result-message{
+.product-list-page-result-message {
     padding: 0px 40px;
 }
 
 @media(max-width: 1009px) {
-    .product-list-page-result-message{
+    .product-list-page-result-message {
         padding: 0px 20px;
         font-size: large;
     }
