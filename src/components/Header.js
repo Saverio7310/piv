@@ -5,19 +5,6 @@ import '../styles/App.css'
 
 import { Link, useNavigate } from 'react-router-dom';
 
-function createTestData(numberOfElements) {
-    const testData = [];
-    for (let i = 1; i <= numberOfElements; i++) {
-        const element = {};
-        element.name = `Prod${i}`;
-        element.description = `Prod${i} description`;
-        element.quantity = i;
-        element.id = `${i}`;
-        testData.push(element);
-    }
-    return testData;
-}
-
 function Header() {
     const [input, setInput] = useState("");
     const navigate = useNavigate()
@@ -25,8 +12,7 @@ function Header() {
     function handleSubmit(event) {
         event.preventDefault();
         setInput('');
-        const testData = createTestData(30);
-        navigate('/products', { state: { products: testData, searchQuery: input } });
+        navigate('/products', { state: { searchQuery: input } });
     };
 
     return (
