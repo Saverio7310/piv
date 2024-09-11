@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import ProductPricesChart from "./ProductPricesChart";
+import ProductPriceInfo from "./ProductPriceInfo";
 
 function ProductDiscountInfo({ productPrices }) {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -17,7 +18,7 @@ function ProductDiscountInfo({ productPrices }) {
 
     const tabsToShow = tabs.slice(0, productPrices.length);
 
-    console.log('Arrays length', tabsToShow, productPrices);
+    console.log('Arrays length', tabsToShow.length, productPrices.length);
 
     return (
         <div className="product-discount-info">
@@ -40,6 +41,7 @@ function ProductDiscountInfo({ productPrices }) {
                             className={`tab-pane ${index === activeTabIndex ? 'active' : ''}`}
                         >
                             <ProductPricesChart prices={priceArray} />
+                            <ProductPriceInfo prices={priceArray} />
                         </div>
                     ))}
                 </div>
