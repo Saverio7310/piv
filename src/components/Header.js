@@ -4,6 +4,7 @@ import lensLogo from '../images/searchIcon.png';
 import '../styles/App.css'
 
 import { Link, useNavigate } from 'react-router-dom';
+import { PiMagnifyingGlassThin, PiShoppingCartThin } from 'react-icons/pi'
 
 function Header() {
     const [input, setInput] = useState("");
@@ -31,12 +32,14 @@ function Header() {
                             onChange={(e) => setInput(e.target.value)}
                         />
                         <button className='search-bar-icon-button' type='submit'>
-                            <img className='search-bar-icon' src={lensLogo} alt='Search button'></img>
+                            <PiMagnifyingGlassThin className='search-bar-icon'/>
                         </button>
                     </div>
                 </form>
             </div>
-            <div className="logo"></div>
+            <div className="logo shopping-cart">
+                <PiShoppingCartThin className='shopping-cart-icon'/>
+            </div>
         </header>
     );
 }
