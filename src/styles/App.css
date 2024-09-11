@@ -64,6 +64,10 @@ body,
     min-height: 100vh;
 }
 
+/* body {
+    overflow-y: auto;
+} */
+
 header {
     background-color: #F6511D;
     display: flex;
@@ -122,6 +126,26 @@ footer {
 .logo img {
     max-width: 50px;
     max-height: 50px;
+}
+
+.shopping-cart {
+   /*  border: 1px solid #000000;
+    border-radius: 10px; */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopping-cart-icon {
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.shopping-cart-icon:hover {
+    cursor: pointer;
 }
 
 .search-bar {
