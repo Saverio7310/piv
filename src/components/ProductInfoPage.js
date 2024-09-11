@@ -2,56 +2,14 @@ import { useLocation } from "react-router-dom";
 
 import '../styles/productInfoPage.css'
 import ProductDiscountInfo from './ProductDiscountInfo';
+import { createTestDataWithPrices } from "../utils/generatePropData";
+import { PiShoppingCartThin } from 'react-icons/pi'
 
 function ProductInfoPage() {
     const location = useLocation();
     const product = location.state?.product;
 
-    function randomValue(order, minimum, digits) {
-        const ranVal = Math.random() * order;
-        if (digits) {
-            return parseFloat((ranVal + minimum).toFixed(2));
-        }
-        return Math.floor(ranVal) + minimum;
-    }
-
-    function generateWeight() {
-        const weight = Math.round(randomValue(20, 0))/10;
-        if (weight === 0)
-            return 0.1;
-        return weight;
-    }
-
-    function createTestData(numberOfSupermarkets) {
-        const testData = [];
-        const numberOfElements = randomValue(10, 1);
-        const weight = generateWeight();
-        for (let i = 0; i < numberOfSupermarkets; i++) {
-            const productPriceData = {};
-            const unitPricesArray = [];
-            const pricesArray = [];
-            for (let j = 0; j < numberOfElements; j++) {
-                let originalPrice = randomValue(10, 1);
-                let price = 0;
-                const changingAmount = randomValue(1, 0, 2);
-                if (j % 2 === 0) {
-                    originalPrice = originalPrice + changingAmount;
-                } else {
-                    originalPrice = originalPrice - changingAmount;
-                }
-                price = originalPrice * weight;
-                unitPricesArray.push(originalPrice);
-                pricesArray.push(price)
-            }
-            productPriceData.weight = weight;
-            productPriceData.unitPricesArray = unitPricesArray;
-            productPriceData.pricesArray = pricesArray;
-            testData.push(productPriceData);
-        }
-        return testData;
-    }
-
-    const productPrices = createTestData(3);
+    const productPrices = createTestDataWithPrices(3);
     console.log('Products', productPrices);
 
     if (!product) {
@@ -75,9 +33,17 @@ function ProductInfoPage() {
                 <div className="product-info">
                     <h1>{title}</h1>
                     <p>{body}</p>
-                    <p>Peso: {productPrices[0].weight}</p>
-                    <ProductDiscountInfo product={product} productPrices={productPrices} />
+                    {/* <p>Peso: {productPrices[0].weight}</p> */}
+                    <div className="add-cart">
+                        <button className="add-cart-button">
+                            <div className="add-cart-button-content">
+                                <p className="add-cart-button-text">Aggiungi</p>
+                                <PiShoppingCartThin className="add-cart-button-icon" /> 
+                            </div>
+                        </button>
+                    </div>
                 </div>
+                <ProductDiscountInfo product={product} productPrices={productPrices} />
             </div>
         </main>
     );
