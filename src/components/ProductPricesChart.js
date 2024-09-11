@@ -18,7 +18,7 @@ ChartJS.register(
     Tooltip,
 );
 
-function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray } }) {
+function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray, discountedPrices } }) {
     const data = {
         labels: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ].slice(0, unitPricesArray.length),
         datasets: [
@@ -26,17 +26,29 @@ function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray } }
                 label: 'Prezzi al Kg',
                 data: unitPricesArray,
                 backgroundColor: 'white',
-                borderColor: 'black',
-                pointBorderColor: 'black',
+                borderColor: 'darkgrey',
+                pointBorderColor: 'darkgrey',
+                pointBackgroundColor: discountedPrices.map((isDiscounted) => {
+                    return isDiscounted ? '#F6511D' : 'white';
+                }),
                 fill: true,
+                borderWidth: 1.5,
+                pointRadius: 5,
+                pointHoverRadius: 8,
             },
             {
-                label: 'Prezzi per prodotto',
+                label: 'Prezzi prodotto',
                 data: pricesArray,
                 backgroundColor: 'white',
                 borderColor: 'black',
                 pointBorderColor: 'black',
+                pointBackgroundColor: discountedPrices.map((isDiscounted) => {
+                    return isDiscounted ? '#F6511D' : 'white';
+                }),
                 fill: true,
+                borderWidth: 1.5,
+                pointRadius: 5,
+                pointHoverRadius: 8,
             },
         ]
     };
@@ -65,11 +77,18 @@ function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray } }
                 min: minValue,
                 max: maxValue,
             }
-        }
+        },
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
     };
 
     return (
-        <Line data={data} options={options} ></Line>
+        <div className='product-prices-chart'>
+            <Line data={data} options={options} ></Line>
+            <p style={{margin: 0}}>* I prezzi in sconto sono segnalati in arancione</p>
+        </div>
    );
 }
 
