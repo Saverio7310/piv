@@ -31,7 +31,6 @@ function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray, di
                 pointBackgroundColor: discountedPrices.map((isDiscounted) => {
                     return isDiscounted ? '#F6511D' : 'white';
                 }),
-                fill: true,
                 borderWidth: 1.5,
                 pointRadius: 5,
                 pointHoverRadius: 8,
@@ -45,7 +44,6 @@ function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray, di
                 pointBackgroundColor: discountedPrices.map((isDiscounted) => {
                     return isDiscounted ? '#F6511D' : 'white';
                 }),
-                fill: true,
                 borderWidth: 1.5,
                 pointRadius: 5,
                 pointHoverRadius: 8,
