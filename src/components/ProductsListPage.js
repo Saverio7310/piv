@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard.js'
-import SessionStorage from '../utils/sessionStorage.js';
 
 import { useLocation, Link } from "react-router-dom";
+import SessionStorage from '../model/SessionStorage.js';
 
 function ProductsListPage() {
     const [productsFetched, setProductsFetched] = useState([]);
@@ -104,7 +104,7 @@ function ProductsListPage() {
                 });
                 limitReached.current = false;
             } catch (error) {
-                console.error('Error while fetching', error);
+                console.warn('Error while fetching', error);
             }
         }
 
@@ -160,7 +160,7 @@ function ProductsListPage() {
             <div className='products-list-page-container'>
                 <h1 className='product-list-page-result-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
                 <div className="products-list-page">
-                    {productsFetched.map((prod) => <ProductCard key={prod.id} product={prod} />)}
+                    {productsFetched.map((prod) => <ProductCard key={prod.userId * prod.id} product={prod} />)}
                 </div>
             </div>
         </main>
