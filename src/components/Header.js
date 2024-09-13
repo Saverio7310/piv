@@ -37,9 +37,9 @@ function Header() {
                     </div>
                 </form>
             </div>
-            <div className="logo shopping-cart">
+            <Link className="logo shopping-cart" to={'/shopping-cart'} style={{color: 'black'}}>
                 <PiShoppingCartThin className='shopping-cart-icon'/>
-            </div>
+            </Link>
         </header>
     );
 }
