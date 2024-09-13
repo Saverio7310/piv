@@ -5,6 +5,9 @@ import ProductsListPage from './ProductsListPage.js';
 import ProductInfoPage from './ProductInfoPage.js';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import CartProvider from './CartProvider.js';
+import NotFoundPage from './NotFoundPage.js';
+import ShoppingCart from './ShoppingCart.js';
 
 const router = createBrowserRouter([{
     path: '/',
@@ -22,6 +25,14 @@ const router = createBrowserRouter([{
             path: '/products/:productID',
             element: <ProductInfoPage />
         },
+        {
+            path: '/shopping-cart',
+            element: <ShoppingCart />
+        },
+        {
+            path: '*',
+            element: <NotFoundPage />
+        },
     ]
 }]);
 
@@ -29,7 +40,9 @@ const router = createBrowserRouter([{
 function App() {
     return (
         <div className="App">
-            <RouterProvider router={router} />
+            <CartProvider>
+                <RouterProvider router={router} />
+            </CartProvider>
         </div>
     );
 }
