@@ -1,3 +1,5 @@
+import ProductPrices from "../model/ProductPrices";
+
 function randomValue(order, minimum, digits) {
     const ranVal = Math.random() * order;
     if (digits) {
@@ -15,24 +17,13 @@ function generateWeight() {
 
 /**
      * Create fake data to test the UI
-     * It returns an array of objects. Each object has a number property (weight),
-     * an array for the prices and for the unit prices
-     * [
-     *   {
-     *     supermarketName: string,
-     *     weight: number,
-     *     unitPricesArray: number[],
-     *     pricesArray: number[],
-     *     discountedPrices: number[]
-     *   },
-     * ]
+     * It returns an array of ProductPrices.
      * @param {number} numberOfSupermarkets - number of supermarket for which the 
      * products have to be created
-     * @returns {Object[]}
+     * @returns {ProductPrices[]}
      */
 function createTestDataWithPrices(numberOfSupermarkets) {
-    const testData = [];
-    const latestPrices = [];
+    const productPricesArray = [];
     const numberOfElements = randomValue(10, 1);
     const weight = generateWeight();
     for (let i = 0; i < numberOfSupermarkets; i++) {
@@ -57,18 +48,10 @@ function createTestDataWithPrices(numberOfSupermarkets) {
             unitPricesArray.push(originalPrice);
             pricesArray.push(price);
         }
-        productPriceData.supermarketName = supermarketName;
-        productPriceData.weight = weight;
-        productPriceData.unitPricesArray = unitPricesArray;
-        productPriceData.pricesArray = pricesArray;
-        productPriceData.discountedPrices = discountedPrices;
-        testData.push(productPriceData);
-        const latestUnitPrice = unitPricesArray[numberOfElements - 1];
-        const latestPrice = pricesArray[numberOfElements - 1];
-        const isDiscounted = discountedPrices[numberOfElements - 1];
-        latestPrices.push([ weight, latestUnitPrice, latestPrice, isDiscounted ]);
+        const prices = new ProductPrices(supermarketName, weight, unitPricesArray, pricesArray, discountedPrices);
+        productPricesArray.push(prices);
     }
-    return [ testData, latestPrices ];
+    return productPricesArray;
 }
 
 export { createTestDataWithPrices };
