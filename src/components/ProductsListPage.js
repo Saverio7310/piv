@@ -1,10 +1,15 @@
+import testProdImg from '../images/propLogo.png';
 import { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard.js'
 
 import { useLocation, Link } from "react-router-dom";
 import SessionStorage from '../model/SessionStorage.js';
+import Product from '../model/Product.js';
 
 function ProductsListPage() {
+    /**
+     * @type {[Array<Product>, React.Dispatch<React.SetStateAction<never[]>>]}
+     */
     const [productsFetched, setProductsFetched] = useState([]);
     const [iteration, setIteration] = useState(1);
     const preloadingData = useRef(true);
@@ -12,9 +17,7 @@ function ProductsListPage() {
     const fetchResult = useRef(true);
     const scrollPercentage = useRef(0);
     const limitReached = useRef(false);
-    //const pageYcoord = useRef(0);
     const location = useLocation();
-    //const products = location.state?.products;
     const searchQuery = location.state?.searchQuery;
     /**
      * Add scroll handle to the window page to understand when it's possible to send
@@ -67,7 +70,10 @@ function ProductsListPage() {
                 console.log('Session data', data);
                 preloadingData.current = false
                 canFetch.current = false
-                setProductsFetched(data.products);
+                const products = data.products.map((prod) => {
+                    return new Product(prod.id, prod.name, prod.description, prod.image, []);
+                })
+                setProductsFetched(products);
                 setIteration(data.iteration + 1);
             } else if (data.searchQuery !== searchQuery) {
                 setProductsFetched([]);
@@ -94,13 +100,16 @@ function ProductsListPage() {
                 //console.log('Fetched data', data);
                 if (data.length === 0)
                     return;
+                const dataObjects = data.map((prod) => {
+                    return new Product(prod.id, prod.title, prod.body, testProdImg);
+                });
                 setProductsFetched((prevProds) => {
-                    return prevProds.concat(data);
+                    return prevProds.concat(dataObjects);
                 });
                 SessionStorage.saveProductList({
                     searchQuery: searchQuery,
                     iteration: iteration,
-                    products: data,
+                    products: dataObjects.map((prod) => prod.getProperties()),
                 });
                 limitReached.current = false;
             } catch (error) {
@@ -160,7 +169,7 @@ function ProductsListPage() {
             <div className='products-list-page-container'>
                 <h1 className='product-list-page-result-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
                 <div className="products-list-page">
-                    {productsFetched.map((prod) => <ProductCard key={prod.userId * prod.id} product={prod} />)}
+                    {productsFetched.map((prod) => <ProductCard key={prod.getId} product={prod} />)}
                 </div>
             </div>
         </main>

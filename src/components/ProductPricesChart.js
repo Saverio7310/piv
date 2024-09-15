@@ -18,7 +18,10 @@ ChartJS.register(
     Tooltip,
 );
 
-function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray, discountedPrices } }) {
+function ProductPricesChart({ prices }) {
+    const unitPricesArray = prices.getUnitPricesArray;
+    const pricesArray = prices.getPricesArray;
+    const discountedPrices = prices.getDiscountedPrices;
     const data = {
         labels: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ].slice(0, unitPricesArray.length),
         datasets: [
@@ -50,22 +53,7 @@ function ProductPricesChart({ prices: { weight, unitPricesArray, pricesArray, di
             },
         ]
     };
-    let minValue = Number.MAX_SAFE_INTEGER;
-    let maxValue = Number.MIN_SAFE_INTEGER;
-    unitPricesArray.forEach(price => {
-        if (price <= minValue)
-            minValue = price;
-        if (price >= maxValue)
-            maxValue = price;
-    });
-    pricesArray.forEach(price => {
-        if (price <= minValue)
-            minValue = price;
-        if (price >= maxValue)
-            maxValue = price;
-    });
-    minValue = Math.max(0 , Math.floor(minValue));
-    maxValue = Math.ceil(maxValue);
+    const { minValue, maxValue } = prices.getMinMax();
     const options = {
         plugins: {
             legend: true
