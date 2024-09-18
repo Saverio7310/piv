@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import '../styles/productInfoPage.css'
@@ -6,21 +6,37 @@ import ProductDiscountInfo from './ProductDiscountInfo';
 import { createTestDataWithPrices } from "../utils/generatePropData";
 import { PiShoppingCartThin } from 'react-icons/pi'
 import { CartContext } from "./CartProvider";
+import { SelectedProductContext } from "./SelectedProductProvider";
 import Product from "../model/Product";
 
 function ProductInfoPage() {
     const { handleAddProduct } = useContext(CartContext);
+    const { selectedProduct, setSelectedProduct } = useContext(SelectedProductContext);
     const location = useLocation();
     /**
      * @type {Product}
      */
     const product = location.state?.product;
 
-    product.setPrices = useMemo(() => {
-        return createTestDataWithPrices(3);
-    }, []);
+    useEffect(() => {
+        console.log('Use Effect - Checking Product');
+        if (!product || !(product instanceof Product)) {
+            console.log('primo if');
+            if (selectedProduct && selectedProduct instanceof Product) {
+                console.log('secondo if');
+                //productRef.current = selectedProduct;
+            } else {
+                console.log('secondo else', selectedProduct, selectedProduct instanceof Product);
+                setSelectedProduct(undefined);
+            }
+        } else {
+            console.log('primo else');
+            product.setPrices = createTestDataWithPrices(3);
+            setSelectedProduct(product);
+        }
+    }, [setSelectedProduct]);
 
-    if (!product) {
+    if (!selectedProduct || !selectedProduct.getName) {
         return (
             <main>
                 <div>
@@ -34,13 +50,13 @@ function ProductInfoPage() {
         <main>
             <div className="product-info-page">
                 <div className="product-image">
-                    <img src={product.getImage} alt='Product' className='product-picture' />
+                    <img src={selectedProduct.getImage} alt='Product' className='product-picture' />
                 </div>
                 <div className="product-info">
-                    <h1>{product.getName}</h1>
-                    <p>{product.getDescription}</p>
+                    <h1>{selectedProduct.getName}</h1>
+                    <p>{selectedProduct.getDescription}</p>
                     <div className="add-cart">
-                        <button className="add-cart-button" onClick={() => handleAddProduct(product)}>
+                        <button className="add-cart-button" onClick={() => handleAddProduct(selectedProduct)}>
                             <div className="add-cart-button-content">
                                 <p className="add-cart-button-text">Aggiungi</p>
                                 <PiShoppingCartThin className="add-cart-button-icon" /> 
@@ -48,7 +64,7 @@ function ProductInfoPage() {
                         </button>
                     </div>
                 </div>
-                <ProductDiscountInfo product={product.getPrices} />
+                <ProductDiscountInfo product={selectedProduct.getPrices} />
             </div>
         </main>
     );
