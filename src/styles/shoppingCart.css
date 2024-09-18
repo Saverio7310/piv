@@ -7,6 +7,16 @@
     text-overflow: ellipsis;
 }
 
+.product-list {
+    margin: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.product-list-item-h1.discount {
+    color: #F6511D;
+}
+
 .product-list-item-p {
     margin: 0;
     align-content: center;
@@ -15,7 +25,7 @@
 }
 
 .shopping-cart-section {
-    padding: 0;
+    padding: 10px;
 }
 
 .product-list-item {
@@ -62,4 +72,64 @@
     min-width: fit-content;
     width: 8rem;
     max-width: 30rem;
+}
+
+.container {
+    display: grid;
+}
+
+.stack {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.supermarket-input-checkbox {
+    background-color: #fff;
+    appearance: none;
+    margin: 0;
+    border: 1px solid;
+    border-radius: 10px;
+    font-size: x-large;
+    height: 3rem;
+    width: 12rem;
+    cursor: pointer;
+}
+
+.supermarket-input-checkbox:hover, .supermarket-input-checkbox:checked:hover {
+    background-color: #96a3bb;
+    /* background-color: #0056b2;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); */
+}
+
+.supermarket-input-checkbox:checked {
+    background-color: #B4C5E4;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.supermarket-input-label {
+    z-index: 1;
+}
+
+.inner-spacing {
+    padding: 20px 10px 0;
+}
+
+.main-function-button {
+    background-color: #F6511D;
+    border: 1px solid;
+    border-radius: 10px;
+    height: 2rem;
+    width: 6rem;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.main-function-button:hover {
+    background-color: #e09781;
 }
