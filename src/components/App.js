@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CartProvider from './CartProvider.js';
 import NotFoundPage from './NotFoundPage.js';
 import ShoppingCart from './ShoppingCart.js';
+import SelectedProductProvider from './SelectedProductProvider.js';
 
 const router = createBrowserRouter([{
     path: '/',
@@ -41,7 +42,9 @@ function App() {
     return (
         <div className="App">
             <CartProvider>
-                <RouterProvider router={router} />
+                <SelectedProductProvider>
+                    <RouterProvider router={router} />
+                </SelectedProductProvider>
             </CartProvider>
         </div>
     );
