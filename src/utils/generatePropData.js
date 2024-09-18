@@ -27,7 +27,6 @@ function createTestDataWithPrices(numberOfSupermarkets) {
     const numberOfElements = randomValue(10, 1);
     const weight = generateWeight();
     for (let i = 0; i < numberOfSupermarkets; i++) {
-        const productPriceData = {};
         const unitPricesArray = [];
         const pricesArray = [];
         const discountedPrices = [];
