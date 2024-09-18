@@ -95,14 +95,24 @@ export default class ProductPrices {
         return { unitPricesAVG, pricesAVG };
     }
 
+    getLatestPrice() {
+        return this.#pricesArray[this.#pricesArray.length - 1];
+    }
+
+    getLatestUnitPrice() {
+        return this.#unitPricesArray[this.#unitPricesArray.length - 1];
+    }
+
+    isNowDiscounted() {
+        return this.#discountedPrices[this.#discountedPrices.length - 1] === 1 ? true : false;
+    }
     getLatestReport() {
-        const latestIndex = this.#unitPricesArray.length - 1;
         return {
-            supermarketName: this.#supermarketName,
-            weigth: this.#weigth,
-            lastUnitPrice: this.#unitPricesArray[latestIndex],
-            lastPrice: this.#pricesArray[latestIndex],
-            nowDiscounted: this.#discountedPrices[latestIndex] ? true : false,
+            supermarketName: this.getSupermarketName,
+            weigth: this.getWeigth,
+            lastUnitPrice: this.getLatestUnitPrice(),
+            lastPrice: this.getLatestPrice(),
+            nowDiscounted: this.isNowDiscounted(),
         };
     }
 
