@@ -19,7 +19,7 @@ function reducer(state, action) {
             return [...state, action.product];
         }
         case 'remove_product': {
-            const id = action.product.getId;
+            const id = action.product;
             return state.filter((prod) => prod.getId !== id);
         }
         case 'update_product': {
@@ -47,10 +47,10 @@ function CartProvider({ children }) {
         });
     }
 
-    function handleRemoveProduct(prod) {
+    function handleRemoveProduct(prodID) {
         dispatch({
             type: 'remove_product',
-            product: prod
+            product: prodID
         });
     }
 
