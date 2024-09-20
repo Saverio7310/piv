@@ -65,6 +65,16 @@
     max-width: 8rem;
 }
 
+.product-list-item-svg {
+    width: 1.7rem;
+    height: 1.7rem;
+    color: #c90606;
+    cursor: pointer;
+    padding: 9px 8px 9px 10px;
+    border: 1px solid #c90606;
+    border-radius: 10px;
+}
+
 .product-list-item-prices {
     display: flex;
     flex-direction: row;
