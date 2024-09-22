@@ -8,7 +8,7 @@ import { ImBin } from 'react-icons/im'
 function ShoppingCart() {
     const { cart, handleRemoveProduct } = useContext(CartContext);
     const [selectedSupermarkets, setSelectedSupermarkets] = useState([]);
-    const [optimizedProduct, setOptimizedProduct] = useState([]);
+    const [optimizedShoppingCart, setOptimizedShoppingCart] = useState([]);
 
     const supermarkets = ['Supermercato 1', 'Supermercato 2', 'Supermercato 3'];
 
@@ -102,22 +102,29 @@ function ShoppingCart() {
 
         const finalArray = findProductsBySupermarket(supermarketsSet, product_supermarket_array);
 
-        setOptimizedProduct(finalArray);
+        setOptimizedShoppingCart(finalArray);
     }
 
     function handleProductDeletion(prodID) {
         handleRemoveProduct(prodID);
-        const optList = optimizedProduct;
-        optList.map(({ supermarketName, products }) => {
+        const optList = [];
+        console.log('Product before deletion', optimizedShoppingCart);
+        console.log('ID', prodID);
+        optimizedShoppingCart.forEach(({ supermarketName, products }) => {
             const prods = products.filter((prod) => prod.productID !== prodID);
-            if (prods.length === 0)
-                return null;
-            return {
-                supermarketName,
-                prods,
-            };
+            if (prods.length !== 0) {
+                const obj = {
+                    supermarketName,
+                    products: prods,
+                };
+                optList.push(obj);
+            }
         });
-        setOptimizedProduct(optList.filter(({ supermarketName, products }) => products.length !== 0));
+        console.log('Product after deletion', optList);
+        setOptimizedShoppingCart(optList);
+        /* setSelectedSupermarkets([]);
+        setOptimizedShoppingCart([]);
+        handleRemoveProduct(prodID); */
     }
 
     if (cart.length === 0) {
@@ -134,7 +141,7 @@ function ShoppingCart() {
                 <ul className="product-list">
                     {cart.map((prod) => {
                         return (
-                            <li key={prod.getId} className="product-list-item">
+                            <li key={`shopping-cart-${prod.getId}`} className="product-list-item">
                                 <div className="product-list-item-content">
                                     <div className="product-list-item-element product-list-item-image">
                                         <img src={prod.getImage} alt="Product" style={{ widows: '5rem', height: '5rem' }} />
@@ -144,9 +151,10 @@ function ShoppingCart() {
                                     </div>
                                     <div className="product-list-item-element product-list-item-prices">
                                         {prod.getPrices.map((price, index) => {
-                                            const { supermarketName, weight, lastUnitPrice, lastPrice, nowDiscounted } = price.getLatestReport();
+                                            const lastPrice = price.getLatestPrice();
+                                            const nowDiscounted = price.isNowDiscounted();
                                             return (
-                                                <h1 key={index} className={`product-list-item-h1 ${nowDiscounted ? 'discount' : ''}`}>€{lastPrice.toFixed(2)}</h1>
+                                                <h1 key={`product-prices-${index}`} className={`product-list-item-h1 ${nowDiscounted ? 'discount' : ''}`}>€{lastPrice.toFixed(2)}</h1>
                                             );
                                         })}
                                     </div>
@@ -170,7 +178,7 @@ function ShoppingCart() {
                         <div className="product-list-item-content">
                             {supermarkets.map((supermarket, index) => {
                                 return (
-                                    <div key={index} className="container">
+                                    <div key={`supermarkets-selection-${index}`} className="container">
                                         <label htmlFor={`supermarket-input-${index}`} className="center-content supermarket-input-label stack">{supermarket}</label>
                                         <input
                                             id={`supermarket-input-${index}`}
@@ -188,15 +196,16 @@ function ShoppingCart() {
                         </div>
                     </div>
                 </section>
-                {optimizedProduct.map(({ supermarketName, products }) => {
+                {optimizedShoppingCart.map(({ supermarketName, products }) => {
+                    console.log('final optimized cart', optimizedShoppingCart);
                     return (
-                        <section className="shopping-cart-section" key={supermarketName}>
+                        <section className="shopping-cart-section" key={`supermarket-section-${supermarketName}`}>
                             <h1>{supermarketName}</h1>
                             <ul className="product-list">
                                 {products.map(({ productID, minPrice, isDiscounted }) => {
                                     const prod = cart.find((product) => product.getId === productID);
                                     return (
-                                        <li key={prod.getId} className="product-list-item">
+                                        <li key={`minimum-price-product-${prod.getId}`} className="product-list-item">
                                             <div className="product-list-item-content">
                                                 <div className="product-list-item-element product-list-item-image">
                                                     <img src={prod.getImage} alt="Product" style={{ widows: '5rem', height: '5rem' }} />
