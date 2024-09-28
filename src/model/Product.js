@@ -15,13 +15,15 @@ export default class Product {
      * @param {string} description 
      * @param {string} image  
      * @param {ProductPrices[]} prices 
+     * @param {number} count 
      */
-    constructor(id, name, description, image, prices) {
+    constructor(id, name, description, image, prices, count) {
         this.#id = id;
         this.#name = name;
         this.#description = description;
         this.#image = image;
         this.#prices = prices;
+        this.#count = count;
     }
 
     get getId() {
@@ -72,6 +74,17 @@ export default class Product {
         this.#count = count;
     }
 
+    clone() {
+        return new Product(
+            this.getId, 
+            this.getName, 
+            this.getDescription, 
+            this.getImage, 
+            this.getPrices,
+            this.getCount,
+        );
+    }
+
     printProduct() {
         return `Prod: ${this.#name}, ${this.#description}, ${this.#id}, ${this.#count}, ${this.#image}, ${this.#prices}`;
     }
@@ -82,6 +95,8 @@ export default class Product {
             name: this.#name,
             description: this.#description,
             image: this.#image,
+            count: this.#count,
+            prices: this.#prices.length ? this.#prices.map((price) => price.getProperties()) : null,
         }
     }
 
