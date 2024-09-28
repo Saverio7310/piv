@@ -71,7 +71,7 @@ function ProductsListPage() {
                 preloadingData.current = false
                 canFetch.current = false
                 const products = data.products.map((prod) => {
-                    return new Product(prod.id, prod.name, prod.description, prod.image, []);
+                    return new Product(prod.id, prod.name, prod.description, prod.image, [], 1);
                 })
                 setProductsFetched(products);
                 setIteration(data.iteration + 1);
@@ -101,7 +101,7 @@ function ProductsListPage() {
                 if (data.length === 0)
                     return;
                 const dataObjects = data.map((prod) => {
-                    return new Product(prod.id, prod.title, prod.body, testProdImg);
+                    return new Product(prod.id, prod.title, prod.body, testProdImg, [], 1);
                 });
                 setProductsFetched((prevProds) => {
                     return prevProds.concat(dataObjects);
