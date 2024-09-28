@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 import Product from "../model/Product";
+import LocalStorage from "../model/LocalStorage";
 
 export const CartContext = createContext();
 
@@ -15,20 +16,22 @@ export const CartContext = createContext();
 function reducer(state, action) {
     switch (action.type) {
         case 'add_product': {
-            console.log('State', state);
             return [...state, action.product];
         }
         case 'remove_product': {
-            const id = action.product;
+            const id = action.product.getId;
             return state.filter((prod) => prod.getId !== id);
         }
         case 'update_product': {
             const id = action.product.getId;
+            const count = action.count;
             const index = state.findIndex((prod) => prod.getId === id);
             if (index !== -1) {
+                const product = state[index];
+                product.setCount = product.getCount + count;
                 return [
                     ...state.slice(0, index),
-                    state[index].setCount = action.count,
+                    product,
                     ...state.slice(index + 1),
                 ];
             }
@@ -45,13 +48,15 @@ function CartProvider({ children }) {
             type: 'add_product',
             product: prod,
         });
+        LocalStorage.saveShoppingCart('add', prod);
     }
 
-    function handleRemoveProduct(prodID) {
+    function handleRemoveProduct(prod) {
         dispatch({
             type: 'remove_product',
-            product: prodID
+            product: prod
         });
+        LocalStorage.saveShoppingCart('remove', prod);
     }
 
     function handleUpdateProduct(prod, count) {
@@ -60,6 +65,9 @@ function CartProvider({ children }) {
             product: prod,
             count: count,
         });
+        const newProd = prod.clone();
+        newProd.setCount = newProd.getCount + count;
+        LocalStorage.saveShoppingCart('update', newProd);
     }
 
     return (
