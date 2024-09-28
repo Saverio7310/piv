@@ -10,7 +10,7 @@ import { SelectedProductContext } from "./SelectedProductProvider";
 import Product from "../model/Product";
 
 function ProductInfoPage() {
-    const { handleAddProduct } = useContext(CartContext);
+    const { cart, handleAddProduct } = useContext(CartContext);
     const { selectedProduct, setSelectedProduct } = useContext(SelectedProductContext);
     const location = useLocation();
     /**
@@ -36,6 +36,14 @@ function ProductInfoPage() {
         }
     }, [setSelectedProduct]);
 
+    function handleAddProductToCart(selectedProduct) {
+        const check = cart.findIndex((prod) => prod.getId === selectedProduct.getId);
+        if (check === -1)
+            handleAddProduct(selectedProduct);
+        else
+            console.log('Prodotto già presente nel carrello');
+    }
+
     if (!selectedProduct || !selectedProduct.getName) {
         return (
             <main>
@@ -56,7 +64,7 @@ function ProductInfoPage() {
                     <h1>{selectedProduct.getName}</h1>
                     <p>{selectedProduct.getDescription}</p>
                     <div className="add-cart">
-                        <button className="add-cart-button" onClick={() => handleAddProduct(selectedProduct)}>
+                        <button className="add-cart-button" onClick={() => handleAddProductToCart(selectedProduct)}>
                             <div className="add-cart-button-content">
                                 <p className="add-cart-button-text">Aggiungi</p>
                                 <PiShoppingCartThin className="add-cart-button-icon" /> 
