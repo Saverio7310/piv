@@ -58,6 +58,16 @@ export default class ProductPrices {
         this.#discountedPrices = discountedPrices;
     }
 
+    getProperties() {
+        return {
+            supermarketName: this.#supermarketName, 
+            weigth: this.#weigth,
+            unitPricesArray: this.#unitPricesArray,
+            pricesArray: this.#pricesArray,
+            discountedPrices: this.#discountedPrices,
+        }
+    }
+
     getMinMax() {
         let minValue = Number.MAX_SAFE_INTEGER;
         let maxValue = Number.MIN_SAFE_INTEGER;
