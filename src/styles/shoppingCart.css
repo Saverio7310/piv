@@ -19,6 +19,7 @@
 
 .product-list-item-p {
     margin: 0;
+    text-align: center;
     align-content: center;
     height: 100%;
     width: 100%;
@@ -59,10 +60,20 @@
     max-width: 40rem;
 }
 
+.section-product-name {
+    max-width: 50rem;
+}
+
 .product-list-item-quantity {
     min-width: min-content;
-    width: 4rem;
-    max-width: 8rem;
+    width: 11rem;
+    max-width: 12rem;
+}
+
+.product-list-item-quantity-content {
+    flex: 1;
+    height: 100%;
+    width: 100%;
 }
 
 .product-list-item-svg {
@@ -82,6 +93,11 @@
     min-width: fit-content;
     width: 8rem;
     max-width: 30rem;
+}
+
+.section-product-price {
+    text-align: right;
+    max-width: 15rem;
 }
 
 .container {
@@ -138,6 +154,32 @@
     width: 6rem;
     font-size: medium;
     cursor: pointer;
+}
+
+.shopping-cart-product-count-button {
+    border: 1px solid;
+    border-radius: 50%;
+    box-sizing: border-box;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    padding: 2px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.shopping-cart-product-count-button-icon {
+    width: 100%;
+    height: 100%;
+}
+
+.minus-button-icon {
+    background-color: #B4C5E4;
+}
+
+.plus-button-icon {
+    background-color: #F6511D;
 }
 
 .main-function-button:hover {
