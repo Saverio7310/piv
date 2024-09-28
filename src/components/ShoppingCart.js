@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartProvider";
 
 import '../styles/shoppingCart.css'
 import Product from "../model/Product";
-import { ImBin } from 'react-icons/im'
+import { ImBin } from 'react-icons/im';
+import { FaPlus, FaMinus } from 'react-icons/fa6'
 
 function ShoppingCart() {
-    const { cart, handleRemoveProduct } = useContext(CartContext);
+    const { cart, handleRemoveProduct, handleUpdateProduct } = useContext(CartContext);
     const [selectedSupermarkets, setSelectedSupermarkets] = useState([]);
     const [optimizedShoppingCart, setOptimizedShoppingCart] = useState([]);
 
@@ -105,13 +106,11 @@ function ShoppingCart() {
         setOptimizedShoppingCart(finalArray);
     }
 
-    function handleProductDeletion(prodID) {
-        handleRemoveProduct(prodID);
+    function handleProductDeletion(product) {
+        handleRemoveProduct(product);
         const optList = [];
-        console.log('Product before deletion', optimizedShoppingCart);
-        console.log('ID', prodID);
         optimizedShoppingCart.forEach(({ supermarketName, products }) => {
-            const prods = products.filter((prod) => prod.productID !== prodID);
+            const prods = products.filter((prod) => prod.productID !== product.getId);
             if (prods.length !== 0) {
                 const obj = {
                     supermarketName,
@@ -120,11 +119,19 @@ function ShoppingCart() {
                 optList.push(obj);
             }
         });
-        console.log('Product after deletion', optList);
         setOptimizedShoppingCart(optList);
         /* setSelectedSupermarkets([]);
         setOptimizedShoppingCart([]);
         handleRemoveProduct(prodID); */
+    }
+
+    function handleProductCountChange(prod, incrementValue) {
+        const actualCount = prod.getCount;
+        if (incrementValue === -1 && actualCount === 1)
+            return;
+        if (incrementValue === 1 && actualCount === 20)
+            return;
+        handleUpdateProduct(prod, incrementValue);
     }
 
     if (cart.length === 0) {
@@ -159,7 +166,7 @@ function ShoppingCart() {
                                         })}
                                     </div>
                                     <div className="product-list-item-element product-list-item-quantity center-content">
-                                        <ImBin className="product-list-item-svg" onClick={() => handleProductDeletion(prod.getId)}></ImBin>
+                                        <ImBin className="product-list-item-svg" onClick={() => handleProductDeletion(prod)}></ImBin>
                                     </div>
                                 </div>
                             </li>
@@ -197,7 +204,6 @@ function ShoppingCart() {
                     </div>
                 </section>
                 {optimizedShoppingCart.map(({ supermarketName, products }) => {
-                    console.log('final optimized cart', optimizedShoppingCart);
                     return (
                         <section className="shopping-cart-section" key={`supermarket-section-${supermarketName}`}>
                             <h1>{supermarketName}</h1>
@@ -210,14 +216,22 @@ function ShoppingCart() {
                                                 <div className="product-list-item-element product-list-item-image">
                                                     <img src={prod.getImage} alt="Product" style={{ widows: '5rem', height: '5rem' }} />
                                                 </div>
-                                                <div className="product-list-item-element product-list-item-name">
+                                                <div className="product-list-item-element product-list-item-name section-product-name">
                                                     <h1 className="product-list-item-h1">{prod.getName}</h1>
                                                 </div>
-                                                <div className="product-list-item-element product-list-item-quantity">
-                                                    <p className="product-list-item-p">Quantità {prod.getCount}</p>
-                                                </div>
-                                                <div className="product-list-item-element product-list-item-name">
+                                                <div className="product-list-item-element product-list-item-name section-product-price">
                                                     <h1 className={`product-list-item-h1 ${isDiscounted ? 'discount' : ''}`}>€{(prod.getCount * minPrice).toFixed(2)}</h1>
+                                                </div>
+                                                <div className="product-list-item-element product-list-item-quantity center-content">
+                                                    <div className="product-list-item-quantity-content center-content">
+                                                        <div className="shopping-cart-product-count-button minus-button-icon">
+                                                            <FaMinus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, -1)} />
+                                                        </div>
+                                                        <p className="product-list-item-p">Quantità: {prod.getCount}</p>
+                                                        <div className="shopping-cart-product-count-button plus-button-icon">
+                                                            <FaPlus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, 1)} />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
