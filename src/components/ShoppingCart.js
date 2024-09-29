@@ -5,9 +5,11 @@ import '../styles/shoppingCart.css'
 import Product from "../model/Product";
 import { ImBin } from 'react-icons/im';
 import { FaPlus, FaMinus } from 'react-icons/fa6'
+import { ToastContext } from "./ToastProvider";
 
 function ShoppingCart() {
     const { cart, handleRemoveProduct, handleUpdateProduct } = useContext(CartContext);
+    const { addToast, TYPES } = useContext(ToastContext);
     const [selectedSupermarkets, setSelectedSupermarkets] = useState([]);
     const [optimizedShoppingCart, setOptimizedShoppingCart] = useState([]);
 
@@ -120,6 +122,8 @@ function ShoppingCart() {
             }
         });
         setOptimizedShoppingCart(optList);
+        const id = Date.now();
+        addToast({ id: id, type: TYPES.success, message: `Prodotto rimosso dal carrello`});
         /* setSelectedSupermarkets([]);
         setOptimizedShoppingCart([]);
         handleRemoveProduct(prodID); */

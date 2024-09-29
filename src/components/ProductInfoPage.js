@@ -8,9 +8,11 @@ import { PiShoppingCartThin } from 'react-icons/pi'
 import { CartContext } from "./CartProvider";
 import { SelectedProductContext } from "./SelectedProductProvider";
 import Product from "../model/Product";
+import { ToastContext } from "./ToastProvider";
 
 function ProductInfoPage() {
     const { cart, handleAddProduct } = useContext(CartContext);
+    const { addToast, TYPES } = useContext(ToastContext);
     const { selectedProduct, setSelectedProduct } = useContext(SelectedProductContext);
     const location = useLocation();
     /**
@@ -38,10 +40,14 @@ function ProductInfoPage() {
 
     function handleAddProductToCart(selectedProduct) {
         const check = cart.findIndex((prod) => prod.getId === selectedProduct.getId);
-        if (check === -1)
+        const id = Date.now();
+        if (check === -1) {
             handleAddProduct(selectedProduct);
-        else
+            addToast({ id: id, type: TYPES.success, message: `Prodotto aggiunto al carrello`});
+        } else {
+            addToast({ id: id, type: TYPES.info, message: `Prodotto già nel carrello`});
             console.log('Prodotto già presente nel carrello');
+        }
     }
 
     if (!selectedProduct || !selectedProduct.getName) {
