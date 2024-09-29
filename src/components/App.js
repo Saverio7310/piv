@@ -1,4 +1,5 @@
 import '../styles/App.css';
+import '../styles/toast.css'
 import Layout from './Layout.js';
 import LandingPage from './LandingPage.js';
 import ProductsListPage from './ProductsListPage.js';
@@ -9,6 +10,8 @@ import CartProvider from './CartProvider.js';
 import NotFoundPage from './NotFoundPage.js';
 import ShoppingCart from './ShoppingCart.js';
 import SelectedProductProvider from './SelectedProductProvider.js';
+import ToastProvider from './ToastProvider.js';
+import ToastsList from './ToastsList.js';
 
 const router = createBrowserRouter([{
     path: '/',
@@ -40,13 +43,16 @@ const router = createBrowserRouter([{
 
 function App() {
     return (
-        <div className="App">
-            <CartProvider>
-                <SelectedProductProvider>
-                    <RouterProvider router={router} />
-                </SelectedProductProvider>
-            </CartProvider>
-        </div>
+        <ToastProvider>
+            <div className="App">
+                <ToastsList />
+                <CartProvider>
+                    <SelectedProductProvider>
+                        <RouterProvider router={router} />
+                    </SelectedProductProvider>
+                </CartProvider>
+            </div>
+        </ToastProvider>
     );
 }
 
