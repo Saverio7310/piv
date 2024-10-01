@@ -70,6 +70,13 @@ export default class LocalStorage {
     }
 
     static getShoppingCart() {
-        return this.getValue(this.shoppingCartKey);
+        const cart = this.getValue(this.shoppingCartKey);
+        if (!cart)
+            return null;
+        return cart.map((prod) => Product.createInstance(prod));
+    }
+
+    static clearShoppingCart() {
+        this.clearValues(this.shoppingCartKey);
     }
 }

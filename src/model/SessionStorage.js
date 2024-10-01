@@ -1,8 +1,11 @@
+import Product from "./Product";
+
 export default class SessionStorage {
     static #storage = sessionStorage;
     static productListKey = 'ProductsList';
     static pagePathKey = 'PagePath';
     static pageYcoordKey = 'PageYcoord';
+    static selectedProductKey = 'SelectedProduct';
 
     static setValue(key, value) {
         if (typeof value !== 'string')
@@ -25,23 +28,16 @@ export default class SessionStorage {
         this.#storage.clear();
     }
 
-    /*
-    products object
-    this.productListKey: {
-        searchQuery: string,
-        products: string[],
-        pageYcoord: number
-    }
-    */
     /**
      * Save or update the products fetched
      * @param {Object} fetchedProducts - Array of objects to store in the sessionStorage
      * @param {string} fetchedProducts.searchQuery - Search query input value
-     * @param {number} fetchedProducts.pageYcoord - Y position of the page
-     * @param {string[]} fetchedProducts.products - Array of fetched products
+     * @param {number} fetchedProducts.iteration - Fetching iteration
+     * @param {Product[]} fetchedProducts.products - Array of fetched products
      * @returns {undefined}
      */
     static saveProductList(fetchedProducts) {
+        fetchedProducts.products = fetchedProducts.products.map((prod) => prod.getProperties())
         const prodsList = this.getValue(this.productListKey);
         if (!prodsList) {
             console.log('No products saved before')
@@ -60,14 +56,43 @@ export default class SessionStorage {
      * Retrieve the products if they exists
      * @returns {Object|null} fetchedProducts - Array of objects stored in the sessionStorage
      * @returns {string} fetchedProducts.searchQuery - Search query input value
-     * @returns {number} fetchedProducts.pageYcoord - Y position of the page
-     * @returns {string[]} fetchedProducts.products - Array of fetched products
+     * @returns {number} fetchedProducts.iteration - Fetching iteration
+     * @returns {Product[]} fetchedProducts.products - Array of fetched products
      */
     static getProductList() {
-        return this.getValue(this.productListKey);
+        const list = this.getValue(this.productListKey);
+        if (!list)
+            return null;
+        const prodArray = list.products.map((prod) => Product.createInstance(prod));
+        return {
+            ...list,
+            products: prodArray,
+        };
     }
 
     static clearProductList() {
         return this.removeValue(this.productListKey);
+    }
+
+    /**
+     * Save selected product
+     * @param {Product} prod 
+     */
+    static saveSelectedProduct(prod) {
+        const oldProduct = this.getValue(this.selectedProductKey);
+        if (oldProduct) {
+            const p = Product.createInstance(oldProduct);
+            if (p.getId === prod.getId) {
+                return;
+            }
+        }
+        this.setValue(this.selectedProductKey, prod.getProperties());
+    }
+
+    static getSelectedProduct() {
+        const prod = this.getValue(this.selectedProductKey);
+        if (!prod)
+            return null;
+        return Product.createInstance(prod);
     }
 }
