@@ -10,6 +10,7 @@ export const CartContext = createContext();
  * @param {Object} action 
  * @param {string} action.type
  * @param {Product} action.product
+ * @param {Product[]} action.products
  * @param {number} action.count
  * @returns 
  */
@@ -36,6 +37,9 @@ function reducer(state, action) {
                 ];
             }
             return state;
+        }
+        case 'restore_products': {
+            return [ ...action.products ];
         }
     }
 }
@@ -70,8 +74,15 @@ function CartProvider({ children }) {
         LocalStorage.saveShoppingCart('update', newProd);
     }
 
+    function handleRestoreProducts(prods) {
+        dispatch({
+            type: 'restore_products',
+            products: prods
+        });
+    }
+
     return (
-        <CartContext.Provider value={{ cart, handleAddProduct, handleRemoveProduct, handleUpdateProduct }}>
+        <CartContext.Provider value={{ cart, handleAddProduct, handleRemoveProduct, handleUpdateProduct, handleRestoreProducts }}>
             {children}
         </CartContext.Provider>
     );
