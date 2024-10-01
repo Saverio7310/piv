@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { SelectedProductContext } from "./SelectedProductProvider";
 
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
+    const { handleAddSelectedProduct } = useContext(SelectedProductContext);
 
     function handleClick() {
-        navigate(`/products/${product.getName}`, { state: { product } } );
+        handleAddSelectedProduct(product);
+        navigate(`/products/${product.getName}`);
     }
 
     return (
