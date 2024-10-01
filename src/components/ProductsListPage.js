@@ -5,6 +5,7 @@ import ProductCard from './ProductCard.js'
 import { useLocation, Link } from "react-router-dom";
 import SessionStorage from '../model/SessionStorage.js';
 import Product from '../model/Product.js';
+import { createTestDataWithPrices } from "../utils/generatePropData";
 
 function ProductsListPage() {
     /**
@@ -70,10 +71,7 @@ function ProductsListPage() {
                 console.log('Session data', data);
                 preloadingData.current = false
                 canFetch.current = false
-                const products = data.products.map((prod) => {
-                    return new Product(prod.id, prod.name, prod.description, prod.image, [], 1);
-                })
-                setProductsFetched(products);
+                setProductsFetched(data.products);
                 setIteration(data.iteration + 1);
             } else if (data.searchQuery !== searchQuery) {
                 setProductsFetched([]);
@@ -101,7 +99,8 @@ function ProductsListPage() {
                 if (data.length === 0)
                     return;
                 const dataObjects = data.map((prod) => {
-                    return new Product(prod.id, prod.title, prod.body, testProdImg, [], 1);
+                    const prices = createTestDataWithPrices(3);
+                    return new Product(prod.id, prod.title, prod.body, testProdImg, prices, 1);
                 });
                 setProductsFetched((prevProds) => {
                     return prevProds.concat(dataObjects);
@@ -109,7 +108,7 @@ function ProductsListPage() {
                 SessionStorage.saveProductList({
                     searchQuery: searchQuery,
                     iteration: iteration,
-                    products: dataObjects.map((prod) => prod.getProperties()),
+                    products: dataObjects,
                 });
                 limitReached.current = false;
             } catch (error) {
@@ -134,7 +133,7 @@ function ProductsListPage() {
         }
     }, [iteration, searchQuery]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         function smoothScrollTo(targetPixelPosition) {
             const dummyElement = document.createElement('div');
             dummyElement.style.position = 'absolute';
@@ -152,7 +151,7 @@ function ProductsListPage() {
         }, 500);
 
         return () => clearInterval(timeOut);
-    }, []);
+    }, []); */
 
     if (!productsFetched || !searchQuery) {
         return (
