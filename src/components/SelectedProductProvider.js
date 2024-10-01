@@ -3,7 +3,7 @@ import SessionStorage from "../model/SessionStorage";
 
 export const SelectedProductContext = createContext();
 
-function SelectedProductProvider({children}) {
+function SelectedProductProvider({ children }) {
     const [selectedProduct, setSelectedProduct] = useState(null)
 
     function handleAddSelectedProduct(product) {
@@ -12,7 +12,7 @@ function SelectedProductProvider({children}) {
     }
 
     return (
-        <SelectedProductContext.Provider value={{selectedProduct, handleAddSelectedProduct}}>
+        <SelectedProductContext.Provider value={{ selectedProduct, handleAddSelectedProduct }}>
             {children}
         </SelectedProductContext.Provider>
     );

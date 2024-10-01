@@ -18,16 +18,16 @@ function ProductInfoPage() {
             return;
         const product = SessionStorage.getSelectedProduct();
         handleAddSelectedProduct(product);
-    }, []);
+    }, [handleAddSelectedProduct]);
 
     function handleAddProductToCart(selectedProduct) {
         const check = cart.findIndex((prod) => prod.getId === selectedProduct.getId);
         const id = Date.now();
         if (check === -1) {
             handleAddProduct(selectedProduct);
-            addToast({ id: id, type: TYPES.success, message: `Prodotto aggiunto al carrello`});
+            addToast({ id: id, type: TYPES.success, message: `Prodotto aggiunto al carrello` });
         } else {
-            addToast({ id: id, type: TYPES.info, message: `Prodotto già nel carrello`});
+            addToast({ id: id, type: TYPES.info, message: `Prodotto già nel carrello` });
             console.log('Prodotto già presente nel carrello');
         }
     }
@@ -55,7 +55,7 @@ function ProductInfoPage() {
                         <button className="add-cart-button" onClick={() => handleAddProductToCart(selectedProduct)}>
                             <div className="add-cart-button-content">
                                 <p className="add-cart-button-text">Aggiungi</p>
-                                <PiShoppingCartThin className="add-cart-button-icon" /> 
+                                <PiShoppingCartThin className="add-cart-button-icon" />
                             </div>
                         </button>
                     </div>

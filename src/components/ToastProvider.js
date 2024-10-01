@@ -25,7 +25,7 @@ function ToastProvider({ children }) {
     }
 
     function addToast(toast) {
-        if('id' in toast && 'type' in toast && 'message' in toast) {
+        if ('id' in toast && 'type' in toast && 'message' in toast) {
             setToasts([ ...toasts, toast ]);
             setTimeout(() => {
                 removeToast(toast.id);
@@ -36,9 +36,9 @@ function ToastProvider({ children }) {
     }
 
     return (
-        <ToastContext.Provider value={{toasts, addToast, TYPES}}>
+        <ToastContext.Provider value={{ toasts, addToast, TYPES }}>
             {children}
-        </ToastContext.Provider>        
+        </ToastContext.Provider>
     );
 }
 

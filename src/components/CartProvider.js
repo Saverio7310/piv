@@ -41,6 +41,9 @@ function reducer(state, action) {
         case 'restore_products': {
             return [ ...action.products ];
         }
+        default: {
+            console.warn('Unexpected token');
+        }
     }
 }
 

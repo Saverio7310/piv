@@ -99,9 +99,9 @@ function ShoppingCart() {
             };
             finalArray.push(obj);
         }
-        
+
         finalArray.sort((a, b) => a.supermarketName.localeCompare(b.supermarketName));
-        
+
         return finalArray;
     }
 
@@ -132,7 +132,7 @@ function ShoppingCart() {
         });
         setOptimizedShoppingCart(optList);
         const id = Date.now();
-        addToast({ id: id, type: TYPES.success, message: `Prodotto rimosso dal carrello`});
+        addToast({ id: id, type: TYPES.success, message: `Prodotto rimosso dal carrello` });
         /* setSelectedSupermarkets([]);
         setOptimizedShoppingCart([]);
         handleRemoveProduct(prodID); */

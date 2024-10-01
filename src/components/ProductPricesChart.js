@@ -23,7 +23,7 @@ function ProductPricesChart({ prices }) {
     const pricesArray = prices.getPricesArray;
     const discountedPrices = prices.getDiscountedPrices;
     const data = {
-        labels: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ].slice(0, unitPricesArray.length),
+        labels: [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ].slice(0, unitPricesArray.length),
         datasets: [
             {
                 label: 'Prezzi al Kg',
@@ -73,9 +73,9 @@ function ProductPricesChart({ prices }) {
     return (
         <div className='product-prices-chart'>
             <Line data={data} options={options} ></Line>
-            <p style={{margin: 0}}>* I prezzi in sconto sono segnalati in arancione</p>
+            <p style={{ margin: 0 }}>* I prezzi in sconto sono segnalati in arancione</p>
         </div>
-   );
+    );
 }
 
 export default ProductPricesChart;

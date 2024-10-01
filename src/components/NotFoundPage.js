@@ -12,7 +12,7 @@ function NotFoundPage() {
                 }
             }>
                 <h1>Pagina inesistente!</h1>
-                <Link to={'/'} style={{margin: '40px'}}>Clicca qui per tornare alla pagina principale</Link>
+                <Link to={'/'} style={{ margin: '40px' }}>Clicca qui per tornare alla pagina principale</Link>
             </div>
         </main>
     );
