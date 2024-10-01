@@ -18,10 +18,8 @@ function ShoppingCart() {
         const products = LocalStorage.getShoppingCart();
         console.log('UseEffect Shopping Cart - preloading');
         console.log(products);
-        if (cart.length === 0 && Array.isArray(products) && products.length !== 0) {
-            const preloadedProds = products.map(prod => Product.createInstance(prod));
-            handleRestoreProducts(preloadedProds);
-        }
+        if (cart.length === 0 && Array.isArray(products) && products.length !== 0)
+            handleRestoreProducts(products);
     }, [cart.length, handleRestoreProducts]);
 
     const supermarkets = ['Supermercato 1', 'Supermercato 2', 'Supermercato 3'];
@@ -151,7 +149,7 @@ function ShoppingCart() {
 
     function handleShoppingCartDeletion() {
         handleRestoreProducts([]);
-        LocalStorage.clearValues();
+        LocalStorage.clearShoppingCart();
     }
 
     if (cart.length === 0) {
