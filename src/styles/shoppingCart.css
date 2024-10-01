@@ -185,3 +185,26 @@
 .main-function-button:hover {
     background-color: #e09781;
 }
+
+.shopping-cart-info-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shopping-cart-deletion-container {
+    height: 2rem;
+    width: 10rem;
+}
+
+.shopping-cart-deletion-button {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    border: 1px solid #c90606;
+    border-radius: 10px;
+    color: #c90606;
+    background-color: white;
+}
