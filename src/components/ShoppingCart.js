@@ -6,12 +6,23 @@ import Product from "../model/Product";
 import { ImBin } from 'react-icons/im';
 import { FaPlus, FaMinus } from 'react-icons/fa6'
 import { ToastContext } from "./ToastProvider";
+import LocalStorage from "../model/LocalStorage";
 
 function ShoppingCart() {
-    const { cart, handleRemoveProduct, handleUpdateProduct } = useContext(CartContext);
+    const { cart, handleRemoveProduct, handleUpdateProduct, handleRestoreProducts } = useContext(CartContext);
     const { addToast, TYPES } = useContext(ToastContext);
     const [selectedSupermarkets, setSelectedSupermarkets] = useState([]);
     const [optimizedShoppingCart, setOptimizedShoppingCart] = useState([]);
+
+    useEffect(() => {
+        const products = LocalStorage.getShoppingCart();
+        console.log('UseEffect Shopping Cart - preloading');
+        console.log(products);
+        if (cart.length === 0 && Array.isArray(products) && products.length !== 0) {
+            const preloadedProds = products.map(prod => Product.createInstance(prod));
+            handleRestoreProducts(preloadedProds);
+        }
+    }, [cart.length, handleRestoreProducts]);
 
     const supermarkets = ['Supermercato 1', 'Supermercato 2', 'Supermercato 3'];
 
@@ -41,7 +52,7 @@ function ShoppingCart() {
     function filterSelectedSupermarkets(selectedSupermarkets) {
         return new Set(
             selectedSupermarkets
-                .filter(({ _, value }) => value == true)
+                .filter(({ _, value }) => value === true)
                 .map(({ key, _ }) => key)
         );
     }
@@ -138,6 +149,11 @@ function ShoppingCart() {
         handleUpdateProduct(prod, incrementValue);
     }
 
+    function handleShoppingCartDeletion() {
+        handleRestoreProducts([]);
+        LocalStorage.clearValues();
+    }
+
     if (cart.length === 0) {
         return (
             <main>
@@ -177,8 +193,11 @@ function ShoppingCart() {
                         );
                     })}
                 </ul>
-                <div style={{ marginLeft: '10px' }}>
+                <div className="shopping-cart-info-container">
                     <p className="product-list-item-p">* I prezzi in sconto sono segnalati in arancione</p>
+                    <div className="shopping-cart-deletion-container">
+                        <button className="shopping-cart-deletion-button" onClick={handleShoppingCartDeletion}>Svuota carrello</button>
+                    </div>
                 </div>
             </section>
             <section className="shopping-cart-section">
