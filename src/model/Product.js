@@ -1,12 +1,12 @@
 import ProductPrices from "./ProductPrices";
 
 export default class Product {
-    #id = 0;
-    #name = '';
-    #description = '';
-    #image = '';
-    #prices = [];
-    #count = 1;
+    #id;
+    #name;
+    #description;
+    #image;
+    #prices;
+    #count;
 
     /**
      * 
@@ -18,12 +18,12 @@ export default class Product {
      * @param {number} count 
      */
     constructor(id, name, description, image, prices, count) {
-        this.#id = id;
-        this.#name = name;
-        this.#description = description;
-        this.#image = image;
-        this.#prices = prices;
-        this.#count = count;
+        this.#id = id || 0;
+        this.#name = name || '';
+        this.#description = description || '';
+        this.#image = image || '';
+        this.#prices = prices || [];
+        this.#count = count || 1;
     }
 
     get getId() {
@@ -67,7 +67,7 @@ export default class Product {
     };
 
     set setImage(image) {
-        this.#prices = image;
+        this.#image = image;
     };
 
     set setCount(count) {
@@ -98,6 +98,28 @@ export default class Product {
             count: this.#count,
             prices: this.#prices.length ? this.#prices.map((price) => price.getProperties()) : null,
         }
+    }
+
+    static createInstance(obj) {
+        const p = new Product();
+        const pLiteral = p.getProperties();
+        try {
+            for (const [ key, value ] of Object.entries(obj)) {
+                let val = value;
+                if (key in pLiteral) {
+                    if (key === 'prices') {
+                        val = value.map((price) => ProductPrices.createInstance(price));
+                    }
+                    const setter = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
+                    p[setter] = val;
+                } else {
+                    throw new Error('Missing / Different property');
+                }
+            }
+        } catch (error) {
+            return null;
+        }
+        return p;
     }
 
     /* getPrice(key) {

@@ -1,9 +1,9 @@
 export default class ProductPrices {
-    #supermarketName = '';
-    #weigth = 0;
-    #unitPricesArray = [];
-    #pricesArray = [];
-    #discountedPrices = [];
+    #supermarketName;
+    #weigth;
+    #unitPricesArray;
+    #pricesArray;
+    #discountedPrices;
 
     /**
      * 
@@ -14,11 +14,11 @@ export default class ProductPrices {
      * @param {number[]} discountedPrices 
      */
     constructor(supermarketName, weigth, unitPricesArray, pricesArray, discountedPrices) {
-        this.#supermarketName = supermarketName;
-        this.#weigth = weigth;
-        this.#unitPricesArray = unitPricesArray;
-        this.#pricesArray = pricesArray;
-        this.#discountedPrices = discountedPrices;
+        this.#supermarketName = supermarketName || '';
+        this.#weigth = weigth || 1;
+        this.#unitPricesArray = unitPricesArray || [];
+        this.#pricesArray = pricesArray || [];
+        this.#discountedPrices = discountedPrices || [];
     }
 
     get getSupermarketName() {
@@ -66,6 +66,24 @@ export default class ProductPrices {
             pricesArray: this.#pricesArray,
             discountedPrices: this.#discountedPrices,
         }
+    }
+
+    static createInstance(obj) {
+        const pp = new ProductPrices();
+        const ppLiteral = pp.getProperties();
+        try {
+            for (const [ key, value ] of Object.entries(obj)) {
+                if (key in ppLiteral) {
+                    const setter = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
+                    pp[setter] = value;
+                } else {
+                    throw new Error('Missing / Different property');
+                }
+            }
+        } catch (error) {
+            return null;
+        }
+        return pp;
     }
 
     getMinMax() {
