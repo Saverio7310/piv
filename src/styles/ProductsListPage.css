@@ -1,0 +1,34 @@
+.products-list-page-container {
+    max-width: 100vw;
+}
+
+.product-list-page-result-message {
+    padding: 0px 40px;
+}
+
+@media(max-width: 1009px) {
+    .product-list-page-result-message {
+        padding: 0px 20px;
+        font-size: large;
+    }
+}
+
+.products-list-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 22vw);
+    grid-template-rows: repeat(auto-fit, 1fr);
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+@media(max-width: 1009px) {
+    .products-list-page {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 40vw);
+        grid-template-rows: repeat(5, 1fr);
+        justify-content: space-around;
+        gap: 20px 0px;
+        padding: 20px 0px;
+    }
+}

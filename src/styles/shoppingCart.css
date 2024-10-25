@@ -10,11 +10,13 @@
 .product-list {
     margin: 10px;
     list-style: none;
-    padding: 0;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-list-item-h1.discount {
-    color: #F6511D;
+    color: var(--primary-color);
 }
 
 .product-list-item-p {
@@ -30,7 +32,7 @@
 }
 
 .product-list-item {
-    border: 1px solid #ccc;
+    border: var(--border) var(--border-color);
     border-radius: 10px;
     padding: 10px;
     margin: 5px 0 5px 0;
@@ -79,10 +81,10 @@
 .product-list-item-svg {
     width: 1.7rem;
     height: 1.7rem;
-    color: #c90606;
+    color: var(--destructive-color);
     cursor: pointer;
     padding: 9px 8px 9px 10px;
-    border: 1px solid #c90606;
+    border: var(--border) var(--destructive-color);
     border-radius: 10px;
 }
 
@@ -113,7 +115,7 @@
     background-color: #fff;
     appearance: none;
     margin: 0;
-    border: 1px solid;
+    border: var(--border);
     border-radius: 10px;
     font-size: x-large;
     height: 3rem;
@@ -121,7 +123,8 @@
     cursor: pointer;
 }
 
-.supermarket-input-checkbox:hover, .supermarket-input-checkbox:checked:hover {
+.supermarket-input-checkbox:hover,
+.supermarket-input-checkbox:checked:hover {
     background-color: #96a3bb;
     /* background-color: #0056b2;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
@@ -129,7 +132,7 @@
 }
 
 .supermarket-input-checkbox:checked {
-    background-color: #B4C5E4;
+    background-color: var(--secondary-color);
 }
 
 .center-content {
@@ -147,8 +150,8 @@
 }
 
 .main-function-button {
-    background-color: #F6511D;
-    border: 1px solid;
+    background-color: var(--primary-color);
+    border: var(--border);
     border-radius: 10px;
     height: 2rem;
     width: 6rem;
@@ -157,7 +160,7 @@
 }
 
 .shopping-cart-product-count-button {
-    border: 1px solid;
+    border: var(--border);
     border-radius: 50%;
     box-sizing: border-box;
     min-height: 1.5rem;
@@ -175,11 +178,11 @@
 }
 
 .minus-button-icon {
-    background-color: #B4C5E4;
+    background-color: var(--secondary-color);
 }
 
 .plus-button-icon {
-    background-color: #F6511D;
+    background-color: var(--primary-color);
 }
 
 .main-function-button:hover {
@@ -203,8 +206,8 @@
     height: 100%;
     width: 100%;
     padding: 0;
-    border: 1px solid #c90606;
+    border: var(--border) var(--destructive-color);
     border-radius: 10px;
-    color: #c90606;
+    color: var(--destructive-color);
     background-color: white;
 }

@@ -23,7 +23,7 @@
 }
 
 .toast-message-item {
-    border: 1px solid #ccc;
+    border: var(--border) var(--border-color);
     border-radius: 10px;
     box-sizing: border-box;
     padding: 5px;

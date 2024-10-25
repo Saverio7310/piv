@@ -1,0 +1,55 @@
+.product-discount-info {
+    flex: 1;
+    /* height: 50vh; */
+    /* min-height: max-content; */
+    padding: 10px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.tab-container {
+    border: var(--border) var(--border-color);
+    border-radius: 10px;
+    /* padding: 10px; */
+}
+
+.tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.tab {
+    padding: 10px;
+    border-radius: 10px;
+    /* border: 1px solid #ccc; */
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #f0f0f0;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+    /*background-color: #f0f0f0;*/
+}
+
+/* .tab-content {
+    padding: 10px;
+} */
+
+.tab-pane {
+    display: none;
+    padding-bottom: 10px;
+    /* min-height: 30vh;
+    max-height: 50vh; */
+    /* font-size: x-large; */
+}
+
+.tab-pane.active {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

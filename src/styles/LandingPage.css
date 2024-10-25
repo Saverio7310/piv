@@ -1,0 +1,19 @@
+.landing-page {
+    flex: 1;
+}
+
+.landing-page p,
+h1 {
+    margin: 0;
+}
+
+.landing-page-title {
+    font-size: 50px;
+    text-align: center;
+}
+
+.landing-page-desc {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: xx-large;
+}

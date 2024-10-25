@@ -47,6 +47,12 @@ header {
 
 html {
     font-family: 'DM Sans Light', sans-serif;
+    --primary-color: #F6511D;
+    --secondary-color: #B4C5E4;
+    --background-color: #FFF9F5;
+    --border-color: #cccccc;
+    --destructive-color: #c90606;
+    --border: 1px solid;
 }
 
 .App {
@@ -68,206 +74,16 @@ body,
     overflow-y: auto;
 } */
 
-header {
-    background-color: #F6511D;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px;
-}
-
 main {
-    background-color: #FFF9F5;
+    background-color: var(--background-color);
     flex: 1;
     padding: 20px;
-}
-
-.landing-page {
-    flex: 1;
-}
-
-.landing-page p,
-h1 {
-    margin: 0;
-}
-
-.landing-page-title {
-    font-size: 50px;
-    text-align: center;
-}
-
-.landing-page-desc {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-size: xx-large;
 }
 
 .accent {
     font-weight: 900;
     /* I think i should import the font, this is not working */
-    color: #F6511D;
-}
-
-footer {
-    background-color: #B4C5E4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.logo {
-    width: 50px;
-    height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-}
-
-.logo img {
-    max-width: 50px;
-    max-height: 50px;
-}
-
-.shopping-cart {
-   /*  border: 1px solid #000000;
-    border-radius: 10px; */
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.shopping-cart-icon {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    max-height: 40px;
-}
-
-.shopping-cart-icon:hover {
-    cursor: pointer;
-}
-
-.search-bar {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    height: 40px;
-}
-
-.search-bar-form-div {
-    display: flex;
-    align-items: center;
-    max-height: 40px;
-}
-
-.search-bar-input {
-    padding: 0rem 0.5rem 0rem 0.5rem;
-    /* padding-left: 0.5rem; */
-    margin: 0;
-    border: 1px solid #ccc;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    /* min-width: 500px; */
-    width: 40vw;
-    height: 40px;
-    font-size: large;
-    box-sizing: border-box;
-}
-
-.search-bar-icon-button {
-    padding: 0;
-    border: 1px solid #ccc;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    width: 40px;
-    height: 40px;
-}
-
-.search-bar-icon-button:hover {
-    background-color: #e0e0e0;
-    cursor: pointer;
-}
-
-.search-bar-icon {
-    padding: 2.5px;
-    width: 35px;
-    height: 35px;
-}
-
-.products-list-page-container {
-    max-width: 100vw;
-}
-
-.products-list-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 22vw);
-    grid-template-rows: repeat(auto-fit, 1fr);
-    justify-content: space-around;
-    gap: 20px;
-    padding: 20px;
-}
-
-.product-list-page-result-message {
-    padding: 0px 40px;
-}
-
-@media(max-width: 1009px) {
-    .product-list-page-result-message {
-        padding: 0px 20px;
-        font-size: large;
-    }
-}
-
-
-@media(max-width: 1009px) {
-    .products-list-page {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, 40vw);
-        grid-template-rows: repeat(5, 1fr);
-        justify-content: space-around;
-        gap: 20px 0px;
-        padding: 20px 0px;
-    }
-}
-
-.product-card {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    z-index: 1;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
-    box-sizing: border-box;
-}
-
-@media(max-width: 1009px) {
-    .product-card {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        z-index: 1;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 10px;
-        margin: 0;
-        box-sizing: border-box;
-    }
-}
-
-.product-card-image {
-    padding-left: auto;
-    padding-right: auto;
-}
-
-.product-card:hover {
-    cursor: pointer;
-    background-color: #f0f0f0;
+    color: var(--primary-color);
 }
 
 @font-face {
