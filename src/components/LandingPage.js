@@ -1,3 +1,5 @@
+import '../styles/LandingPage.css';
+
 function LandingPage() {
     console.log('Landing page');
     const landingPageTitle = `Prezzi In Vista`;

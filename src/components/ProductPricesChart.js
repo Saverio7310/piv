@@ -9,6 +9,8 @@ import {
     Tooltip,
 } from 'chart.js';
 
+import '../styles/ProductPricesChart.css';
+
 ChartJS.register(
     LineElement,
     CategoryScale,

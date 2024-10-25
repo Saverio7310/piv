@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
-import '../styles/productInfoPage.css'
-import ProductDiscountInfo from './ProductDiscountInfo';
-import { PiShoppingCartThin } from 'react-icons/pi'
+import { PiShoppingCartThin } from 'react-icons/pi';
+
 import { CartContext } from "./CartProvider";
-import { SelectedProductContext } from "./SelectedProductProvider";
 import { ToastContext } from "./ToastProvider";
+import ProductDiscountInfo from './ProductDiscountInfo';
+import { SelectedProductContext } from "./SelectedProductProvider";
+
 import SessionStorage from "../model/SessionStorage";
+
+import '../styles/ProductInfoPage.css';
 
 function ProductInfoPage() {
     const { cart, handleAddProduct } = useContext(CartContext);

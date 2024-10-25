@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "./CartProvider";
-
-import '../styles/shoppingCart.css'
-import Product from "../model/Product";
 import { ImBin } from 'react-icons/im';
-import { FaPlus, FaMinus } from 'react-icons/fa6'
+import { FaPlus, FaMinus } from 'react-icons/fa6';
+
+import { CartContext } from "./CartProvider";
 import { ToastContext } from "./ToastProvider";
+
+import Product from "../model/Product";
 import LocalStorage from "../model/LocalStorage";
+
+import '../styles/ShoppingCart.css';
 
 function ShoppingCart() {
     const { cart, handleRemoveProduct, handleUpdateProduct, handleRestoreProducts } = useContext(CartContext);
@@ -150,6 +152,8 @@ function ShoppingCart() {
     function handleShoppingCartDeletion() {
         handleRestoreProducts([]);
         LocalStorage.clearShoppingCart();
+        const id = Date.now();
+        addToast({ id: id, type: TYPES.success, message: `Carrello svuotato` });
     }
 
     if (cart.length === 0) {

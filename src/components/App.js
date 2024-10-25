@@ -1,17 +1,17 @@
-import '../styles/App.css';
-import '../styles/toast.css'
-import Layout from './Layout.js';
-import LandingPage from './LandingPage.js';
-import ProductsListPage from './ProductsListPage.js';
-import ProductInfoPage from './ProductInfoPage.js';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import Layout from './Layout.js';
+import ToastsList from './ToastsList.js';
+import LandingPage from './LandingPage.js';
 import CartProvider from './CartProvider.js';
 import NotFoundPage from './NotFoundPage.js';
 import ShoppingCart from './ShoppingCart.js';
-import SelectedProductProvider from './SelectedProductProvider.js';
 import ToastProvider from './ToastProvider.js';
-import ToastsList from './ToastsList.js';
+import ProductInfoPage from './ProductInfoPage.js';
+import ProductsListPage from './ProductsListPage.js';
+import SelectedProductProvider from './SelectedProductProvider.js';
+
+import '../styles/App.css';
 
 const router = createBrowserRouter([{
     path: '/',

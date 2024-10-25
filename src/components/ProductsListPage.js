@@ -1,11 +1,15 @@
-import testProdImg from '../images/propLogo.png';
 import { useEffect, useRef, useState } from 'react';
-import ProductCard from './ProductCard.js'
-
 import { useLocation, Link } from "react-router-dom";
-import SessionStorage from '../model/SessionStorage.js';
+
+import ProductCard from './ProductCard.js';
+
 import Product from '../model/Product.js';
+import SessionStorage from '../model/SessionStorage.js';
 import { createTestDataWithPrices } from "../utils/generatePropData";
+
+import testProdImg from '../images/propLogo.png';
+
+import '../styles/ProductsListPage.css';
 
 function ProductsListPage() {
     /**

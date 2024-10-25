@@ -1,3 +1,5 @@
+import '../styles/ProductPriceInfo.css';
+
 function ProductPriceInfo({ prices }) {
     function computeChangeRatio(actualValue, AVG) {
         return ((actualValue * 100) / AVG) - 100;

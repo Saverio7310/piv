@@ -1,5 +1,8 @@
 import { useContext } from "react";
+
 import { ToastContext } from "./ToastProvider";
+
+import '../styles/ToastsList.css';
 
 function ToastsList() {
     const { toasts } = useContext(ToastContext);

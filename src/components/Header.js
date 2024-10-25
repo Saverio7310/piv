@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import websiteLogo from '../images/propLogo.png';
-import '../styles/App.css'
-
 import { Link, useNavigate } from 'react-router-dom';
-import { PiMagnifyingGlassThin, PiShoppingCartThin } from 'react-icons/pi'
+import { PiMagnifyingGlassThin, PiShoppingCartThin } from 'react-icons/pi';
+
+import websiteLogo from '../images/propLogo.png';
+
+import '../styles/Header.css';
 
 function Header() {
     const [input, setInput] = useState("");

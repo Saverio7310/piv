@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-import ProductPricesChart from "./ProductPricesChart";
 import ProductPriceInfo from "./ProductPriceInfo";
+import ProductPricesChart from "./ProductPricesChart";
+
+import '../styles/ProductDiscountInfo.css';
 
 function ProductDiscountInfo({ product }) {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
