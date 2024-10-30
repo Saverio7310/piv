@@ -22,6 +22,7 @@ function ProductsListPage() {
     const fetchResult = useRef(true);
     const scrollPercentage = useRef(0);
     const limitReached = useRef(false);
+    const hasJustPreload = useRef(false);
     const location = useLocation();
     const searchQuery = location.state?.searchQuery;
     /**
@@ -75,10 +76,12 @@ function ProductsListPage() {
                 console.log('Session data', data);
                 preloadingData.current = false
                 canFetch.current = false
+                hasJustPreload.current = true;
                 setProductsFetched(data.products);
                 setIteration(data.iteration + 1);
             } else if (data.searchQuery !== searchQuery) {
                 setProductsFetched([]);
+                setIteration(1);
                 SessionStorage.clearProductList();
             }
         }
@@ -120,8 +123,22 @@ function ProductsListPage() {
             }
         }
 
+        /**
+         * This logic is being used because og these reasons:
+         * 1: if the data has been loaded from the browser storage, it will skip the
+         *    very next fetching
+         * 2: loading data from browser storage sets the latest iteration value
+         *    (state variable) which triggers a new render. This means that the first
+         *    fetch will be skipped but the re-render will fetch again since the
+         *    canFetch variable will be set to true. So there is the need for another
+         *    variable, hasJustPreload, that makes the page skip the second fetch as well
+         */
         if (canFetch.current) {
             console.log('Fetching data');
+            if (hasJustPreload.current) {
+                hasJustPreload.current = false;
+                return;
+            }
             fetchData()
         } else {
             console.log('Didn\'t fetch data');
