@@ -1,0 +1,22 @@
+.product-list-item-prices {
+    display: flex;
+    flex-direction: row;
+    min-width: min-content;
+    min-width: fit-content;
+    width: 8rem;
+    max-width: 30rem;
+}
+
+.product-list-item-h1.discount {
+    color: var(--primary-color);
+}
+
+.product-list-item-svg {
+    width: 1.7rem;
+    height: 1.7rem;
+    color: var(--destructive-color);
+    cursor: pointer;
+    padding: 9px 8px 9px 10px;
+    border: var(--border) var(--destructive-color);
+    border-radius: 10px;
+}

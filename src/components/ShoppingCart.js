@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import { ImBin } from 'react-icons/im';
-import { FaPlus, FaMinus } from 'react-icons/fa6';
 
 import { CartContext } from "./CartProvider";
 import { ToastContext } from "./ToastProvider";
+import ShoppingCartProductsList from "./ShoppingCartProductsList";
+import ShoppingCartSupermarketsSelection from "./ShoppingCartSupermarketsSelection";
+import ShoppingCartOptimizedList from "./ShoppingCartOptimizedList";
 
 import Product from "../model/Product";
 import LocalStorage from "../model/LocalStorage";
 
 import '../styles/ShoppingCart.css';
+import '../styles/ShoppingCartSharedStyle.css';
 
 function ShoppingCart() {
     const { cart, handleRemoveProduct, handleUpdateProduct, handleRestoreProducts } = useContext(CartContext);
@@ -23,8 +25,6 @@ function ShoppingCart() {
         if (cart.length === 0 && Array.isArray(products) && products.length !== 0)
             handleRestoreProducts(products);
     }, [cart.length, handleRestoreProducts]);
-
-    const supermarkets = ['Supermercato 1', 'Supermercato 2', 'Supermercato 3'];
 
     function handleCheckboxChange(supermarketName, isChecked) {
         let found = false;
@@ -165,108 +165,19 @@ function ShoppingCart() {
     }
     return (
         <main>
-            <section className="shopping-cart-section">
-                <h1>Prodotti selezionati</h1>
-                <ul className="product-list">
-                    {cart.map((prod) => {
-                        return (
-                            <li key={`shopping-cart-${prod.getId}`} className="product-list-item">
-                                <div className="product-list-item-content">
-                                    <div className="product-list-item-element product-list-item-image">
-                                        <img src={prod.getImage} alt="Product" style={{ widows: '5rem', height: '5rem' }} />
-                                    </div>
-                                    <div className="product-list-item-element product-list-item-name">
-                                        <h1 className="product-list-item-h1">{prod.getName}</h1>
-                                    </div>
-                                    <div className="product-list-item-element product-list-item-prices">
-                                        {prod.getPrices.map((price, index) => {
-                                            const lastPrice = price.getLatestPrice();
-                                            const nowDiscounted = price.isNowDiscounted();
-                                            return (
-                                                <h1 key={`product-prices-${index}`} className={`product-list-item-h1 ${nowDiscounted ? 'discount' : ''}`}>€{lastPrice.toFixed(2)}</h1>
-                                            );
-                                        })}
-                                    </div>
-                                    <div className="product-list-item-element product-list-item-quantity center-content">
-                                        <ImBin className="product-list-item-svg" onClick={() => handleProductDeletion(prod)}></ImBin>
-                                    </div>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </ul>
-                <div className="shopping-cart-info-container">
-                    <p className="product-list-item-p">* I prezzi in sconto sono segnalati in arancione</p>
-                    <div className="shopping-cart-deletion-container">
-                        <button className="shopping-cart-deletion-button" onClick={handleShoppingCartDeletion}>Svuota carrello</button>
-                    </div>
-                </div>
-            </section>
-            <section className="shopping-cart-section">
-                <h1>Ottimizzazione spesa</h1>
-                <section className="shopping-cart-section">
-                    <h1>Seleziona i supermercati desiderati</h1>
-                    <div className="product-list-item">
-                        <div className="product-list-item-content">
-                            {supermarkets.map((supermarket, index) => {
-                                return (
-                                    <div key={`supermarkets-selection-${index}`} className="container">
-                                        <label htmlFor={`supermarket-input-${index}`} className="center-content supermarket-input-label stack">{supermarket}</label>
-                                        <input
-                                            id={`supermarket-input-${index}`}
-                                            type="checkbox"
-                                            className="supermarket-input-checkbox stack"
-                                            value={supermarket}
-                                            onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
-                                        />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="center-content inner-spacing">
-                            <button className="main-function-button" onClick={handleShoppingCartOptimization}>Ottimizza</button>
-                        </div>
-                    </div>
-                </section>
-                {optimizedShoppingCart.map(({ supermarketName, products }) => {
-                    return (
-                        <section className="shopping-cart-section" key={`supermarket-section-${supermarketName}`}>
-                            <h1>{supermarketName}</h1>
-                            <ul className="product-list">
-                                {products.map(({ productID, minPrice, isDiscounted }) => {
-                                    const prod = cart.find((product) => product.getId === productID);
-                                    return (
-                                        <li key={`minimum-price-product-${prod.getId}`} className="product-list-item">
-                                            <div className="product-list-item-content">
-                                                <div className="product-list-item-element product-list-item-image">
-                                                    <img src={prod.getImage} alt="Product" style={{ widows: '5rem', height: '5rem' }} />
-                                                </div>
-                                                <div className="product-list-item-element product-list-item-name section-product-name">
-                                                    <h1 className="product-list-item-h1">{prod.getName}</h1>
-                                                </div>
-                                                <div className="product-list-item-element product-list-item-name section-product-price">
-                                                    <h1 className={`product-list-item-h1 ${isDiscounted ? 'discount' : ''}`}>€{(prod.getCount * minPrice).toFixed(2)}</h1>
-                                                </div>
-                                                <div className="product-list-item-element product-list-item-quantity center-content">
-                                                    <div className="product-list-item-quantity-content center-content">
-                                                        <div className="shopping-cart-product-count-button minus-button-icon">
-                                                            <FaMinus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, -1)} />
-                                                        </div>
-                                                        <p className="product-list-item-p">Quantità: {prod.getCount}</p>
-                                                        <div className="shopping-cart-product-count-button plus-button-icon">
-                                                            <FaPlus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, 1)} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </section>
-                    );
-                })}
-            </section>
+            <ShoppingCartProductsList
+                handleProductDeletion={handleProductDeletion}
+                handleShoppingCartDeletion={handleShoppingCartDeletion} />
+            <ShoppingCartSupermarketsSelection
+                handleCheckboxChange={handleCheckboxChange}
+                handleShoppingCartOptimization={handleShoppingCartOptimization} >
+                {optimizedShoppingCart.map(({ supermarketName, products }) =>
+                    <ShoppingCartOptimizedList
+                        supermarketName={supermarketName}
+                        products={products}
+                        handleProductCountChange={handleProductCountChange} />)
+                }
+            </ShoppingCartSupermarketsSelection>
         </main>
     );
 }

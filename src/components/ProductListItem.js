@@ -1,0 +1,62 @@
+import { ImBin } from 'react-icons/im';
+import { FaPlus, FaMinus } from 'react-icons/fa6';
+
+import '../styles/ProductShoppingListItem.css';
+import '../styles/ProductOptShoppingListItem.css';
+
+/**
+ * Incoming prop 'type' is a number value representing:
+ *      1: the list containing all the prices
+ *      0: the list containing the minimum price for the product 
+ */
+function ProductListItem({ type, prod, handleProductDeletion, minPrice, isDiscounted, handleProductCountChange }) {
+    const keyList = `minimum-price-product-${prod.getId}`;
+    const keyOptList = `shopping-cart-${prod.getId}`;
+    return (
+        <li key={type ? keyList : keyOptList} className='product-list-item'>
+            <div className='product-list-item-content'>
+                <div className="product-list-item-element product-list-item-image">
+                    <img src={prod.getImage} alt="Product" className='product-list-item-picture'/>
+                </div>
+                <div className={`product-list-item-element product-list-item-name ${!type ? 'section-product-name' : ''}`}>
+                    <h1 className="product-list-item-h1">{prod.getName}</h1>
+                </div>
+                {type ? (
+                    <>
+                        <div className="product-list-item-element product-list-item-prices">
+                            {prod.getPrices.map((price, index) => {
+                                const lastPrice = price.getLatestPrice();
+                                const nowDiscounted = price.isNowDiscounted();
+                                return (
+                                    <h1 key={`product-prices-${index}`} className={`product-list-item-h1 ${nowDiscounted ? 'discount' : ''}`}>€{lastPrice.toFixed(2)}</h1>
+                                );
+                            })}
+                        </div>
+                        <div className="product-list-item-element product-list-item-quantity center-content">
+                            <ImBin className="product-list-item-svg" onClick={() => handleProductDeletion(prod)}></ImBin>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="product-list-item-element product-list-item-name section-product-price">
+                            <h1 className={`product-list-item-h1 ${isDiscounted ? 'discount' : ''}`}>€{(prod.getCount * minPrice).toFixed(2)}</h1>
+                        </div>
+                        <div className="product-list-item-element product-list-item-quantity center-content">
+                            <div className="product-list-item-quantity-content center-content">
+                                <div className="shopping-cart-product-count-button minus-button-icon">
+                                    <FaMinus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, -1)} />
+                                </div>
+                                <p className="product-list-item-p">Quantità: {prod.getCount}</p>
+                                <div className="shopping-cart-product-count-button plus-button-icon">
+                                    <FaPlus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, 1)} />
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+        </li>
+    );
+}
+
+export default ProductListItem;

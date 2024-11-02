@@ -1,0 +1,41 @@
+.section-product-name {
+    max-width: 50rem;
+}
+
+.section-product-price {
+    text-align: right;
+    max-width: 15rem;
+}
+
+.product-list-item-quantity-content {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+}
+
+.shopping-cart-product-count-button {
+    border: var(--border);
+    border-radius: 50%;
+    box-sizing: border-box;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    padding: 2px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.shopping-cart-product-count-button-icon {
+    width: 100%;
+    height: 100%;
+}
+
+.minus-button-icon {
+    background-color: var(--secondary-color);
+}
+
+.plus-button-icon {
+    background-color: var(--primary-color);
+}
+
