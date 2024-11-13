@@ -52,8 +52,8 @@ function ProductInfoPage() {
                     <img src={selectedProduct.getImage} alt='Product' className='product-picture' />
                 </div>
                 <div className="product-info">
-                    <h1>{selectedProduct.getName}</h1>
-                    <p>{selectedProduct.getDescription}</p>
+                    <h1 className="product-title">{selectedProduct.getName}</h1>
+                    {/* <p>{selectedProduct.getDescription}</p> */}
                     <div className="add-cart">
                         <button className="add-cart-button" onClick={() => handleAddProductToCart(selectedProduct)}>
                             <div className="add-cart-button-content">
