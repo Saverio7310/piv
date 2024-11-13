@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiMagnifyingGlassThin, PiShoppingCartThin } from 'react-icons/pi';
+
+import { CartContext } from './CartProvider';
 
 import websiteLogo from '../images/propLogo.png';
 
@@ -9,6 +11,7 @@ import '../styles/Header.css';
 function Header() {
     const [input, setInput] = useState("");
     const navigate = useNavigate()
+    const { cart } = useContext(CartContext);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -16,13 +19,17 @@ function Header() {
         navigate('/products', { state: { searchQuery: input } });
     };
 
+    const shoppingCartCounterMax = 10;
+
     return (
         <header>
-            <Link to={'/'} className="logo">
-                <img src={websiteLogo} alt="Website Logo" />
-            </Link>
+            <div className="logo">
+                <Link to={'/'}>
+                    <img src={websiteLogo} alt="Website Logo" className="logo-img"/>
+                </Link>
+            </div>
             <div className="search-bar">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="search-bar-form">
                     <div className='search-bar-form-div'>
                         <input
                             className='search-bar-input'
@@ -37,9 +44,14 @@ function Header() {
                     </div>
                 </form>
             </div>
-            <Link className="logo shopping-cart" to={'/shopping-cart'} style={{ color: 'black' }}>
-                <PiShoppingCartThin className='shopping-cart-icon' />
-            </Link>
+            <div className="logo">
+                <Link to={'/shopping-cart'} style={{ color: 'black' }}>
+                    <PiShoppingCartThin className='logo-img shopping-cart' />
+                    { cart.length > 0 && <span className="shopping-cart-count">{
+                        cart.length <= shoppingCartCounterMax ? cart.length : `${shoppingCartCounterMax}+`
+                    }</span> }
+                </Link>
+            </div>
         </header>
     );
 }
