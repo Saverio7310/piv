@@ -40,7 +40,7 @@ function ProductPriceInfo({ prices }) {
     const priceRatio = computeChangeRatio(lastPrice, pricesAVG);
 
     return (
-        <div className="product-price-info">
+        <div className="product-price-info min-dimensions">
             <h1>Prezzo attuale: €{lastPrice.toFixed(2)}</h1>
             <p>{getSpanElement(computeSign(priceRatio), priceRatio)} rispetto alla media: €{pricesAVG.toFixed(2)}
             </p>
