@@ -70,12 +70,13 @@ function ProductPricesChart({ prices }) {
             mode: 'index',
             intersect: false,
         },
+        responsive: true,
     };
 
     return (
-        <div className='product-prices-chart'>
+        <div className='product-prices-chart min-dimensions'>
             <Line data={data} options={options} ></Line>
-            <p style={{ margin: 0 }}>* I prezzi in sconto sono segnalati in arancione</p>
+            <p className="chart-caption">* I prezzi in sconto sono segnalati in arancione</p>
         </div>
     );
 }
