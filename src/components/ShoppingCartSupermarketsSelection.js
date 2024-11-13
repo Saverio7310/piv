@@ -8,7 +8,7 @@ function ShoppingCartSupermarketsSelection({ children, handleCheckboxChange, han
             <section className="shopping-cart-section">
                 <h1>Seleziona i supermercati desiderati</h1>
                 <div className="product-list-item">
-                    <div className="product-list-item-content">
+                    <div className="product-list-item-content gap">
                         {supermarkets.map((supermarket, index) => {
                             return (
                                 <div key={`supermarkets-selection-${index}`} className="container">
