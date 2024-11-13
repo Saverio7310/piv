@@ -8,7 +8,9 @@ function ShoppingCartProductsList({ handleProductDeletion, handleShoppingCartDel
 
     return (
         <section className="shopping-cart-section">
-            <h1>Prodotti selezionati</h1>
+            <div className="shopping-cart-list-title">
+                <h1>Prodotti selezionati</h1>
+            </div>
             <ul className="product-list">
                 {cart.map((prod) => <ProductListItem type={1} prod={prod} handleProductDeletion={handleProductDeletion} />)}
             </ul>
