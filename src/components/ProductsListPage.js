@@ -186,9 +186,11 @@ function ProductsListPage() {
     }
     return (
         <main>
-            <div className='products-list-page-container'>
-                <h1 className='product-list-page-result-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
-                <div className="products-list-page">
+            <div className='products-list-page'>
+                <div className="product-list-page-info">
+                    <h1 className='product-list-page-info-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
+                </div>
+                <div className="products-list-page-grid">
                     {productsFetched.map((prod) => <ProductCard key={prod.getId} product={prod} />)}
                 </div>
             </div>
