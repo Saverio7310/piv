@@ -16,9 +16,15 @@ function ProductCard({ product }) {
 
     return (
         <div key={product.getId} className="product-card" onClick={handleClick}>
-            <img src={product.getImage} alt='Product' className='product-card-image' />
-            <h1>Product name: {product.getName}</h1>
-            <h2>Desc: {product.getId}</h2>
+            <div className="product-card-img">
+                <img src={product.getImage} alt='Product' className='product-card-image' />
+            </div>
+            <div className="product-card-title">
+                <h1>Product name: {product.getName}</h1>
+            </div>
+            <div className="product-card-desc">
+                <h2>Desc: {product.getId}</h2>
+            </div>
         </div>
     );
 }
