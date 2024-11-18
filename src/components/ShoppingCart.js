@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import copy from 'copy-to-clipboard'
 
 import { CartContext } from "./CartProvider";
 import { ToastContext } from "./ToastProvider";
@@ -156,10 +157,34 @@ function ShoppingCart() {
         addToast({ id: id, type: TYPES.success, message: `Carrello svuotato` });
     }
 
+    function copyShoppingList() {
+        let text = '';
+        let total = 0;
+        optimizedShoppingCart.forEach(({ supermarketName, products }) => {
+            let partial = 0;
+            text += supermarketName + ':';
+            products.forEach((product) => {
+                const prod = cart.find((p) => p.getId === product.productID);
+                const line = `\n- ${prod.getName} x${prod.getCount}, €${(prod.getCount * product.minPrice).toFixed(2)}`;
+                text += line;
+                partial += product.minPrice * prod.getCount;
+            })
+            text += `\nPARZIALE: €${partial.toFixed(2)}\n\n`;
+            total += partial;
+            partial = 0;
+        })
+        text += `TOTALE SPESA: €${total.toFixed(2)}`;
+        const copyResult = copy(text, {message: "Lista salvata"});
+        if (copyResult) {
+            const id = Date.now();
+            addToast({id: id, type: TYPES.info, message: `Lista della spesa copiata!` });
+        }
+    }
+
     if (cart.length === 0) {
         return (
             <main>
-                <h1>Nessun prodotto nel carrello!</h1>
+                <h1 className="empty-cart-message">Nessun prodotto nel carrello!</h1>
             </main>
         );
     }
@@ -171,11 +196,20 @@ function ShoppingCart() {
             <ShoppingCartSupermarketsSelection
                 handleCheckboxChange={handleCheckboxChange}
                 handleShoppingCartOptimization={handleShoppingCartOptimization} >
-                {optimizedShoppingCart.map(({ supermarketName, products }) =>
-                    <ShoppingCartOptimizedList
-                        supermarketName={supermarketName}
-                        products={products}
-                        handleProductCountChange={handleProductCountChange} />)
+                {
+                    optimizedShoppingCart.map(({ supermarketName, products }) =>
+                        <ShoppingCartOptimizedList
+                            supermarketName={supermarketName}
+                            products={products}
+                            handleProductCountChange={handleProductCountChange} />)
+                }
+                {
+                    optimizedShoppingCart.length !== 0 &&
+                    <div className="shopping-cart-info-container lateral-padding">
+                        <div className="copy-button-container">
+                            <button className="copy-button primary-button" onClick={copyShoppingList}>Copia lista della spesa</button>
+                        </div>
+                    </div>
                 }
             </ShoppingCartSupermarketsSelection>
         </main>
