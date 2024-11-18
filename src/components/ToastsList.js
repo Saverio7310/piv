@@ -8,7 +8,7 @@ function ToastsList() {
     const { toasts } = useContext(ToastContext);
 
     return (
-        <div className='toast-messages-panel'>
+        <div className='toast-messages-panel panel-dimensions'>
             <ul className='toast-messages-list'>
                 {
                     toasts.map((toast) => {
