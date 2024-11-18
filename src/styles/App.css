@@ -48,11 +48,23 @@ header {
 html {
     font-family: 'DM Sans Light', sans-serif;
     --primary-color: #F6511D;
+    --primary-color-hover: #e09781;
+    --primary-color-active: #B82C00;
     --secondary-color: #B4C5E4;
+    --secondary-color-hover: #C4D5F4;
+    --secondary-color-active: #7E8EB3;
     --background-color: #FFF9F5;
     --border-color: #cccccc;
     --destructive-color: #c90606;
+    --destructive-color-hover: #f3c9c9;
+    --destructive-color-active: #b76161;
     --border: 1px solid;
+    /*EX COLORS*/
+    --previous-secondary-color-hover: #7e97c5;
+    --previous-secondary-color-active: #7e8eb3;
+    --x: #96a3bb;
+    --hover: #C4D5F4;
+    --active: #7E8EB3;
 }
 
 .App {
@@ -70,20 +82,36 @@ body,
     min-height: 100vh;
 }
 
-/* body {
-    overflow-y: auto;
-} */
+* {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+}
 
 main {
     background-color: var(--background-color);
     flex: 1;
-    padding: 20px;
+    padding: 1rem;
+}
+
+button, img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .accent {
     font-weight: 900;
     /* I think i should import the font, this is not working */
     color: var(--primary-color);
+}
+
+@media(max-width: 500px) {
+    main {
+        background-color: var(--background-color);
+        flex: 1;
+        padding: 0;
+    }
 }
 
 @font-face {

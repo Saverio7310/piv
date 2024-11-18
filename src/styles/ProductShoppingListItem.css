@@ -1,13 +1,13 @@
 .product-list-item-prices {
     display: flex;
-    flex-direction: row;
     min-width: min-content;
-    min-width: fit-content;
+    height: 5rem;
+    min-width: 13.5rem;
     width: 8rem;
-    max-width: 30rem;
+    max-width: 28rem;
 }
 
-.product-list-item-h1.discount {
+.discount {
     color: var(--primary-color);
 }
 
@@ -19,4 +19,8 @@
     padding: 9px 8px 9px 10px;
     border: var(--border) var(--destructive-color);
     border-radius: 10px;
+}
+
+.product-list-item-svg:hover {
+    background-color: var(--destructive-color-hover);
 }

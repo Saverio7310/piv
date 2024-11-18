@@ -1,10 +1,20 @@
 .section-product-name {
-    max-width: 50rem;
+    /* max-width: 50rem; */
+    width: 100%;
 }
 
 .section-product-price {
-    text-align: right;
-    max-width: 15rem;
+    box-sizing: border-box;
+    height: 5rem;
+    min-width: 8rem;
+    width: 8rem;
+    max-width: 8rem;
+}
+
+.product-list-item-quantity-container {
+    min-width: 10rem;
+    width: 11rem;
+    max-width: 12rem;
 }
 
 .product-list-item-quantity-content {
@@ -39,3 +49,10 @@
     background-color: var(--primary-color);
 }
 
+.minus-button-icon:hover {
+    background-color: var(--secondary-color-hover);
+}
+
+.plus-button-icon:hover {
+    background-color: var(--primary-color-hover);
+}
