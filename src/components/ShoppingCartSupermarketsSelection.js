@@ -25,7 +25,7 @@ function ShoppingCartSupermarketsSelection({ children, handleCheckboxChange, han
                         })}
                     </div>
                     <div className="center-content inner-spacing">
-                        <button className="main-function-button" onClick={handleShoppingCartOptimization}>Ottimizza</button>
+                        <button className="optimize-shopping-list-btn primary-button" onClick={handleShoppingCartOptimization}>Ottimizza</button>
                     </div>
                 </div>
             </section>
