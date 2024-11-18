@@ -33,24 +33,24 @@ function ProductListItem({ type, prod, handleProductDeletion, minPrice, isDiscou
                             })}
                         </div> 
                         <div className="product-list-item-element product-list-item-deletion center-element">
-                            <ImBin className="product-list-item-svg" onClick={() => handleProductDeletion(prod)}></ImBin>
+                            <ImBin className="product-list-item-svg destructive-button" onClick={() => handleProductDeletion(prod)}></ImBin>
                         </div>
                     </>
                 ) : (
                     <>
-                        <div className="product-list-item-element section-product-price">
-                            <h1 className={`product-list-item-price ${isDiscounted ? 'discount' : ''}`}>€{(prod.getCount * minPrice).toFixed(2)}</h1>
-                        </div>
                         <div className="product-list-item-element product-list-item-quantity-container center-content">
                             <div className="product-list-item-quantity-content center-content">
-                                <div className="shopping-cart-product-count-button minus-button-icon">
+                                <div className="shopping-cart-product-count-button minus-button-icon secondary-button">
                                     <FaMinus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, -1)} />
                                 </div>
                                 <p className="product-list-item-quantity">Quantità: {prod.getCount}</p>
-                                <div className="shopping-cart-product-count-button plus-button-icon">
+                                <div className="shopping-cart-product-count-button plus-button-icon primary-button">
                                     <FaPlus className="shopping-cart-product-count-button-icon" onClick={() => handleProductCountChange(prod, 1)} />
                                 </div>
                             </div>
+                        </div>
+                        <div className="product-list-item-element section-product-price">
+                            <h1 className={`product-list-item-price ${isDiscounted ? 'discount' : ''}`}>€{(prod.getCount * minPrice).toFixed(2)}</h1>
                         </div>
                     </>
                 )}
