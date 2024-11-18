@@ -17,7 +17,7 @@ function ShoppingCartProductsList({ handleProductDeletion, handleShoppingCartDel
             <div className="shopping-cart-info-container">
                 <p className="product-list-item-p">* I prezzi in sconto sono segnalati in arancione</p>
                 <div className="shopping-cart-deletion-container">
-                    <button className="shopping-cart-deletion-button" onClick={handleShoppingCartDeletion}>Svuota carrello</button>
+                    <button className="shopping-cart-deletion-button destructive-button" onClick={handleShoppingCartDeletion}>Svuota carrello</button>
                 </div>
             </div>
         </section>
