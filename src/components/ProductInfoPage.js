@@ -55,7 +55,7 @@ function ProductInfoPage() {
                     <h1 className="product-title">{selectedProduct.getName}</h1>
                     {/* <p>{selectedProduct.getDescription}</p> */}
                     <div className="add-cart">
-                        <button className="add-cart-button" onClick={() => handleAddProductToCart(selectedProduct)}>
+                        <button className="add-cart-button primary-button" onClick={() => handleAddProductToCart(selectedProduct)}>
                             <div className="add-cart-button-content">
                                 <p className="add-cart-button-text">Aggiungi</p>
                                 <PiShoppingCartThin className="add-cart-button-icon" />
