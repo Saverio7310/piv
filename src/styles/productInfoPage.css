@@ -51,10 +51,6 @@
     cursor: pointer;
 }
 
-.add-cart-button:hover {
-    background-color: var(--primary-color-hover);
-}
-
 .add-cart-button-content {
     display: flex;
     flex-wrap: wrap;

@@ -114,6 +114,86 @@ button, img {
     }
 }
 
+@media(pointer: fine) {
+    .supermarket-input-checkbox:hover:active,
+    .supermarket-input-checkbox:checked:hover:active {
+        background-color: var(--secondary-color-active);
+    }
+    
+    .supermarket-input-checkbox:hover,
+    .supermarket-input-checkbox:checked:hover {
+        background-color: var(--secondary-color-hover);
+    }
+    
+    .supermarket-input-checkbox:checked {
+        background-color: var(--secondary-color);
+    }
+
+    .primary-button:hover {
+        background-color: var(--primary-color-hover);
+    }
+    
+    .primary-button:active {
+        background-color: var(--primary-color-active);
+    }
+
+    .secondary-button:hover {
+        background-color: var(--secondary-color-hover);
+    }
+    
+    .secondary-button:active {
+        background-color: var(--secondary-color-active);
+    }
+
+    .destructive-button:hover {
+        background-color: var(--destructive-color-hover);
+    }
+    
+    .destructive-button:active {
+        background-color: var(--destructive-color-active);
+    }
+}
+
+@media (pointer: coarse) {
+    .supermarket-input-checkbox:active,
+    .supermarket-input-checkbox:checked:active {
+        background-color: var(--secondary-color-active);
+    }
+
+    /* .supermarket-input-checkbox:hover,
+    .supermarket-input-checkbox:checked:hover {
+        background-color: none;
+    } */
+
+    .supermarket-input-checkbox:checked {
+        background-color: var(--secondary-color);
+    }
+
+    /* .primary-button:hover {
+        background-color: var(--primary-color-hover);
+    } */
+    
+    .primary-button:active {
+        background-color: var(--primary-color-active);
+    }
+
+    /* .secondary-button:hover {
+        background-color: var(--secondary-color-hover);
+    } */
+    
+    .secondary-button:active {
+        background-color: var(--secondary-color-active);
+    }
+
+    /* .destructive-button:hover {
+        background-color: var(--destructive-color-hover);
+    } */
+    
+    .destructive-button:active {
+        background-color: var(--destructive-color-active);
+    }
+}
+
 @font-face {
     font-family: 'DM Sans Light';
     src: url('../fonts/DMSans_18pt-Light.ttf') format('truetype');
