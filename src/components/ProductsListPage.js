@@ -10,13 +10,15 @@ import { createTestDataWithPrices } from "../utils/generatePropData";
 import testProdImg from '../images/propLogo.png';
 
 import '../styles/ProductsListPage.css';
+import handleProductNameURI from '../utils/productURI.js';
+import printCurrentInfo from '../utils/logObject.js';
 
 function ProductsListPage() {
     /**
      * @type {[Array<Product>, React.Dispatch<React.SetStateAction<never[]>>]}
      */
     const [productsFetched, setProductsFetched] = useState([]);
-    const [iteration, setIteration] = useState(1);
+    const [iteration, setIteration] = useState(0);
     const preloadingData = useRef(true);
     const canFetch = useRef(true);
     const fetchResult = useRef(true);
@@ -43,7 +45,7 @@ function ProductsListPage() {
              * to fetch or not
              */
             if (fetchResult && percentage >= 70 && !limitReached.current) {
-                setIteration(i => i + 1);
+                setIteration(i => i + 10);
                 limitReached.current = true;
             }
             /**
@@ -73,15 +75,15 @@ function ProductsListPage() {
         const data = SessionStorage.getProductList();
         if (data) {
             if (data.searchQuery === searchQuery && preloadingData.current) {
-                console.log('Session data', data);
+                console.log('Session data', printCurrentInfo(data));
                 preloadingData.current = false
                 canFetch.current = false
                 hasJustPreload.current = true;
                 setProductsFetched(data.products);
-                setIteration(data.iteration + 1);
+                setIteration(data.iteration + 10);
             } else if (data.searchQuery !== searchQuery) {
                 setProductsFetched([]);
-                setIteration(1);
+                setIteration(0);
                 SessionStorage.clearProductList();
             }
         }
@@ -100,15 +102,20 @@ function ProductsListPage() {
 
         async function fetchData() {
             try {
-                const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${iteration}`, { signal });
-                const data = await response.json();
-                //console.log('Fetched data', data);
+                const correctURI = handleProductNameURI(searchQuery);
+                const response = await fetch(`http://192.168.1.88:3030/api/v1/products/${correctURI}?offset=${iteration}&limit=${10}`, { signal });
+                //(`https://jsonplaceholder.typicode.com/posts?userId=${iteration}`, { signal });
+                const serverResponseObject = await response.json();
+                const { rowCount, data } = serverResponseObject;
+                console.log('Fetched data (products)', serverResponseObject);
                 if (data.length === 0)
                     return;
                 const dataObjects = data.map((prod) => {
-                    const prices = createTestDataWithPrices(3);
-                    return new Product(prod.id, prod.title, prod.body, testProdImg, prices, 1);
+                    //const prices = createTestDataWithPrices(3);
+                    return new Product(prod.product_id, prod.name, 'body description', prod.quantity_unit, prod.quantity_value, testProdImg, 1);
+                    //return new Product(prod.id, prod.title, prod.body, testProdImg, prices, 1);
                 });
+                console.log('Fetched products array', printCurrentInfo(dataObjects));
                 setProductsFetched((prevProds) => {
                     return prevProds.concat(dataObjects);
                 });
@@ -119,7 +126,7 @@ function ProductsListPage() {
                 });
                 limitReached.current = false;
             } catch (error) {
-                console.warn('Error while fetching', error);
+                console.error('Error while fetching products', error);
             }
         }
 
