@@ -10,10 +10,8 @@ import '../styles/ProductOptShoppingListItem.css';
  *      0: the list containing the minimum price for the product 
  */
 function ProductListItem({ type, prod, handleProductDeletion, minPrice, isDiscounted, handleProductCountChange }) {
-    const keyList = `minimum-price-product-${prod.getId}`;
-    const keyOptList = `shopping-cart-${prod.getId}`;
     return (
-        <li key={type ? keyList : keyOptList} className='product-list-item'>
+        <li className='product-list-item'>
             <div className='product-list-item-content'>
                 <div className="product-list-item-element product-list-item-image">
                     <img src={prod.getImage} alt="Product" className='product-list-item-picture' />
