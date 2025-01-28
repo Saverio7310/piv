@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SelectedProductContext } from "./SelectedProductProvider";
 
 import '../styles/ProductCard.css';
+import handleProductNameURI from "../utils/productURI";
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
@@ -11,7 +12,8 @@ function ProductCard({ product }) {
 
     function handleClick() {
         handleAddSelectedProduct(product);
-        navigate(`/products/${product.getName}`);
+        const productURI = handleProductNameURI(product.getName);
+        navigate(`/products/${productURI}`);
     }
 
     return (
@@ -20,10 +22,7 @@ function ProductCard({ product }) {
                 <img src={product.getImage} alt='Product' className='product-card-image' />
             </div>
             <div className="product-card-title">
-                <h1>Product name: {product.getName}</h1>
-            </div>
-            <div className="product-card-desc">
-                <h2>Desc: {product.getId}</h2>
+                <h1>{product.getName}</h1>
             </div>
         </div>
     );
