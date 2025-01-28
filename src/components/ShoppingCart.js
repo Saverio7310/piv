@@ -22,7 +22,7 @@ function ShoppingCart() {
 
     useEffect(() => {
         const products = LocalStorage.getShoppingCart();
-        console.log('UseEffect Shopping Cart - preloading');
+        console.log('UseEffect Shopping Cart - preloading',products);
         if (cart.length === 0 && Array.isArray(products) && products.length !== 0)
             handleRestoreProducts(products);
     }, [cart.length, handleRestoreProducts]);
