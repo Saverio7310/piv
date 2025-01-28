@@ -1,6 +1,19 @@
+import { useContext } from "react";
+import { CartContext } from "./CartProvider";
+
 function ShoppingCartSupermarketsSelection({ children, handleCheckboxChange, handleShoppingCartOptimization }) {
 
-    const supermarkets = ['Supermercato 1', 'Supermercato 2', 'Supermercato 3'];
+    const { cart } = useContext(CartContext);
+
+    const supermarketSet = new Set();
+
+    cart.forEach(product => {
+        product.getPrices.forEach(price => {
+            supermarketSet.add(price.getSupermarketName);
+        });
+    });
+
+    const supermarkets = [...supermarketSet];
 
     return (
         <section className="shopping-cart-section">
