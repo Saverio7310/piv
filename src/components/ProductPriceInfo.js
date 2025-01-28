@@ -1,6 +1,6 @@
 import '../styles/ProductPriceInfo.css';
 
-function ProductPriceInfo({ prices }) {
+function ProductPriceInfo({ productPrice }) {
     function computeChangeRatio(actualValue, AVG) {
         return ((actualValue * 100) / AVG) - 100;
     }
@@ -33,8 +33,8 @@ function ProductPriceInfo({ prices }) {
         return (<span style={{ color: color }}>{sign}{value.toFixed(2)}%</span>);
     }
 
-    const { lastUnitPrice, lastPrice, nowDiscounted } = prices.getLatestReport();
-    const { unitPricesAVG, pricesAVG } = prices.getAVGs();
+    const { lastUnitPrice, lastPrice, nowDiscounted } = productPrice.getLatestReport();
+    const { unitPricesAVG, pricesAVG } = productPrice.getAVGs();
 
     const unitPriceRatio = computeChangeRatio(lastUnitPrice, unitPricesAVG);
     const priceRatio = computeChangeRatio(lastPrice, pricesAVG);
