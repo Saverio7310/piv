@@ -36,6 +36,15 @@
     align-content: center;
 }
 
+.product-title .product-description {
+    display: block;
+    /* Ensures it appears on a new line */
+    font-size: medium;
+    font-weight: 100;
+    color: gray;
+    margin-top: 0.25rem;
+}
+
 .add-cart {
     display: flex;
     justify-content: right;

@@ -43,6 +43,8 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: large;
+    font-weight: 500;
 }
 
 /* @media(max-width: 1009px) {
