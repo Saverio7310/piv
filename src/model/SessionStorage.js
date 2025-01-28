@@ -1,4 +1,5 @@
-import Product from "./Product";
+import printCurrentInfo from "../utils/logObject.js";
+import Product from "./Product.js";
 
 export default class SessionStorage {
     static #storage = sessionStorage;
@@ -37,7 +38,6 @@ export default class SessionStorage {
      * @returns {undefined}
      */
     static saveProductList(fetchedProducts) {
-        fetchedProducts.products = fetchedProducts.products.map((prod) => prod.getProperties())
         const prodsList = this.getValue(this.productListKey);
         if (!prodsList) {
             console.log('No products saved before')
@@ -63,7 +63,9 @@ export default class SessionStorage {
         const list = this.getValue(this.productListKey);
         if (!list)
             return null;
+        console.log('Session Storage - Product String List', list);
         const prodArray = list.products.map((prod) => Product.createInstance(prod));
+        console.log('Session Storage - Product Object List', printCurrentInfo(prodArray));
         return {
             ...list,
             products: prodArray,
@@ -79,14 +81,8 @@ export default class SessionStorage {
      * @param {Product} prod 
      */
     static saveSelectedProduct(prod) {
-        const oldProduct = this.getValue(this.selectedProductKey);
-        if (oldProduct) {
-            const p = Product.createInstance(oldProduct);
-            if (p.getId === prod.getId) {
-                return;
-            }
-        }
-        this.setValue(this.selectedProductKey, prod.getProperties());
+        console.log('Session Storage - Save Selected Product', printCurrentInfo(prod));
+        this.setValue(this.selectedProductKey, prod);
     }
 
     static getSelectedProduct() {
