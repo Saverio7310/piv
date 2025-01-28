@@ -1,77 +1,105 @@
-import ProductPrices from "./ProductPrices";
+import ProductPrices from "./ProductPrices.js";
 
 export default class Product {
-    #id;
-    #name;
-    #description;
-    #image;
-    #prices;
-    #count;
-
     /**
      * 
      * @param {number} id 
      * @param {string} name 
      * @param {string} description 
+     * @param {string} quantityUnit 
+     * @param {number} quantityValue 
      * @param {string} image  
      * @param {ProductPrices[]} prices 
      * @param {number} count 
      */
-    constructor(id, name, description, image, prices, count) {
-        this.#id = id || 0;
-        this.#name = name || '';
-        this.#description = description || '';
-        this.#image = image || '';
-        this.#prices = prices || [];
-        this.#count = count || 1;
+    constructor(id, name, description, quantity_unit, quantity_value, image, count, prices) {
+        this.id = id || 0;
+        this.name = name || '';
+        this.description = description || '';
+        this.quantityUnit = quantity_unit || '/';
+        this.quantityValue = quantity_value || 1;
+        this.image = image || '';
+        this.count = count || 1;
+        this.prices = prices || [];
     }
 
     get getId() {
-        return this.#id;
+        return this.id;
     };
 
     get getName() {
-        return this.#name;
+        return this.name;
     };
 
     get getDescription() {
-        return this.#description;
+        return this.description;
+    };
+
+    get getQuantityUnit() {
+        return this.quantityUnit;
+    };
+
+    get getQuantityValue() {
+        return this.quantityValue;
     };
 
     get getPrices() {
-        return this.#prices;
+        return this.prices;
     };
 
     get getImage() {
-        return this.#image;
+        return this.image;
     };
 
     get getCount() {
-        return this.#count;
+        return this.count;
     }
 
     set setId(id) {
-        this.#id = id;
+        this.id = id;
     };
     
     set setName(name) {
-        this.#name = name;
+        this.name = name;
     };
 
     set setDescription(desc) {
-        this.#description = desc;
+        this.description = desc;
+    };
+
+    set setQuantityUnit(unit) {
+        this.quantityUnit = unit;
+    };
+
+    set setQuantityValue(value) {
+        this.quantityValue = value;
     };
 
     set setPrices(prices) {
-        this.#prices = prices;
+        this.prices = prices;
     };
 
     set setImage(image) {
-        this.#image = image;
+        this.image = image;
     };
 
     set setCount(count) {
-        this.#count = count;
+        this.count = count;
+    }
+
+    addPrice(price) {
+        this.prices.push(price);
+    }
+
+    addProperty(key, value) {
+        console.log('Product - Add Property', key, value);
+        if (key !== 'prices') {
+            const newKey = `set${key.at(0).toUpperCase()}${key.slice(1)}`;
+            this[newKey] = value;
+        } else {
+            const pricesList = value.map(price => ProductPrices.createInstance(price));
+            this.setPrices = pricesList;
+        }
     }
 
     clone() {
@@ -79,54 +107,28 @@ export default class Product {
             this.getId, 
             this.getName, 
             this.getDescription, 
+            this.getQuantityUnit,
+            this.quantityValue,
             this.getImage, 
-            this.getPrices,
             this.getCount,
+            this.getPrices,
         );
     }
 
     printProduct() {
-        return `Prod: ${this.#name}, ${this.#description}, ${this.#id}, ${this.#count}, ${this.#image}, ${this.#prices}`;
-    }
-
-    getProperties() {
-        return {
-            id: this.#id,
-            name: this.#name,
-            description: this.#description,
-            image: this.#image,
-            count: this.#count,
-            prices: this.#prices.length ? this.#prices.map((price) => price.getProperties()) : null,
-        }
+        return `Prod: ${this.name}, ${this.description}, ${this.id}, ${this.count}, ${this.image}, ${this.prices}`;
     }
 
     static createInstance(obj) {
-        const p = new Product();
-        const pLiteral = p.getProperties();
+        const product = new Product();
         try {
-            for (const [ key, value ] of Object.entries(obj)) {
-                let val = value;
-                if (key in pLiteral) {
-                    if (key === 'prices') {
-                        val = value.map((price) => ProductPrices.createInstance(price));
-                    }
-                    const setter = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
-                    p[setter] = val;
-                } else {
-                    throw new Error('Missing / Different property');
-                }
+            for (const [key, value] of Object.entries(obj)) {
+                product.addProperty(key, value);
             }
+            return product;
         } catch (error) {
-            return null;
+            console.error('Parsing error', error);
         }
-        return p;
+        return product;
     }
-
-    /* getPrice(key) {
-        return this.#prices.get(key);
-    }
-
-    setPrice(key, value) {
-        this.#prices.set(key, value);
-    } */
 }
