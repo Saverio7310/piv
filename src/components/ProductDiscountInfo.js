@@ -8,6 +8,10 @@ import '../styles/ProductDiscountInfo.css';
 function ProductDiscountInfo({ product }) {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
 
+    const productPrices = product.getPrices;
+
+    console.log('Product Discount Info', productPrices);
+
     const handleTabClick = (index) => {
         setActiveTabIndex(index);
     };
@@ -16,24 +20,24 @@ function ProductDiscountInfo({ product }) {
         <div className="product-discount-info">
             <div className="tab-container">
                 <ul className="tabs">
-                    {product.map((prod, index) => (
+                    {productPrices.map((productPrice, index) => (
                         <li
                             key={index}
                             className={`tab ${index === activeTabIndex ? 'active' : ''}`}
                             onClick={() => handleTabClick(index)}
                         >
-                            {prod.getSupermarketName}
+                            {productPrice.getSupermarketName}
                         </li>
                     ))}
                 </ul>
                 <div className="tab-content">
-                    {product.map((prod, index) => (
+                    {productPrices.map((productPrice, index) => (
                         <div
                             key={index}
                             className={`tab-pane ${index === activeTabIndex ? 'active' : ''}`}
                         >
-                            <ProductPricesChart prices={prod} />
-                            <ProductPriceInfo prices={prod} />
+                            <ProductPricesChart productPrice={productPrice} />
+                            <ProductPriceInfo productPrice={productPrice} />
                         </div>
                     ))}
                 </div>
