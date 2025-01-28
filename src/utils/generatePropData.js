@@ -23,12 +23,12 @@ function generateWeight() {
      * @returns {ProductPrices[]}
      */
 function createTestDataWithPrices(numberOfSupermarkets) {
-    const productPricesArray = [];
+    const productPrices = [];
     const numberOfElements = randomValue(10, 1);
     const weight = generateWeight();
     for (let i = 0; i < numberOfSupermarkets; i++) {
-        const unitPricesArray = [];
-        const pricesArray = [];
+        const unitPrices = [];
+        const prices = [];
         const discountedPrices = [];
         const supermarketName = `Supermercato ${i + 1}`;
         for (let j = 0; j < numberOfElements; j++) {
@@ -44,13 +44,13 @@ function createTestDataWithPrices(numberOfSupermarkets) {
             const discountProbability = Math.random();
             const isDiscounted = discountProbability >= 0.8 ? 1 : 0;
             discountedPrices.push(isDiscounted);
-            unitPricesArray.push(originalPrice);
-            pricesArray.push(price);
+            unitPrices.push(originalPrice);
+            prices.push(price);
         }
-        const prices = new ProductPrices(supermarketName, weight, unitPricesArray, pricesArray, discountedPrices);
-        productPricesArray.push(prices);
+        const pricesObject = new ProductPrices(supermarketName, weight, unitPrices, prices, discountedPrices);
+        productPrices.push(pricesObject);
     }
-    return productPricesArray;
+    return productPrices;
 }
 
 export { createTestDataWithPrices };
