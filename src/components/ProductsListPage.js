@@ -104,16 +104,13 @@ function ProductsListPage() {
             try {
                 const correctURI = handleProductNameURI(searchQuery);
                 const response = await fetch(`http://192.168.1.88:3030/api/v1/products/${correctURI}?offset=${iteration}&limit=${10}`, { signal });
-                //(`https://jsonplaceholder.typicode.com/posts?userId=${iteration}`, { signal });
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
                 console.log('Fetched data (products)', serverResponseObject);
                 if (data.length === 0)
                     return;
                 const dataObjects = data.map((prod) => {
-                    //const prices = createTestDataWithPrices(3);
                     return new Product(prod.product_id, prod.name, 'body description', prod.quantity_unit, prod.quantity_value, testProdImg, 1);
-                    //return new Product(prod.id, prod.title, prod.body, testProdImg, prices, 1);
                 });
                 console.log('Fetched products array', printCurrentInfo(dataObjects));
                 setProductsFetched((prevProds) => {
