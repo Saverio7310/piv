@@ -1,4 +1,4 @@
-import Product from "./Product";
+import Product from "./Product.js";
 
 export default class LocalStorage {
     static #storage = localStorage;
@@ -27,17 +27,17 @@ export default class LocalStorage {
 
     static #addProductToShoppingCart(cart, product) {
         if (cart) {
-            cart.push(product.getProperties());
+            cart.push(product);
             return cart;
         } else {
-            return [ product.getProperties() ];
+            return [ product ];
         }
     }
     static #updateProductInShoppingCart(cart, product) {
         return cart.map((prod) => {
             if (prod.id !== product.getId)
                 return prod;
-            return product.getProperties();
+            return product;
         });
     }
     static #deleteProductFromShoppingCart(cart, product) {
