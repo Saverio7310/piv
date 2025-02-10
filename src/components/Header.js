@@ -17,12 +17,11 @@ function Header() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        const id = Date.now();
         if (input.length < 3) {
-            addToast({id: id, type: TYPES.warning, message: 'Nome prodotto troppo corto'});
+            addToast({ type: TYPES.warning, message: 'Nome prodotto troppo corto'});
             return;
         } else if (input.length > 50) {
-            addToast({id: id, type: TYPES.warning, message: 'Nome prodotto troppo lungo'});
+            addToast({ type: TYPES.warning, message: 'Nome prodotto troppo lungo'});
             return;
         }
         setInput('');

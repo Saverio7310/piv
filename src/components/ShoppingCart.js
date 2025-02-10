@@ -60,8 +60,7 @@ function ShoppingCart() {
             }
         });
         setOptimizedShoppingCart(optList);
-        const id = Date.now();
-        addToast({ id: id, type: TYPES.success, message: `Prodotto rimosso dal carrello` });
+        addToast({ type: TYPES.success, message: `Prodotto rimosso dal carrello` });
     }
 
     function handleProductCountChange(prod, incrementValue) {
@@ -76,8 +75,7 @@ function ShoppingCart() {
     function handleShoppingCartDeletion() {
         handleRestoreProducts([]);
         LocalStorage.clearShoppingCart();
-        const id = Date.now();
-        addToast({ id: id, type: TYPES.success, message: `Carrello svuotato` });
+        addToast({ type: TYPES.success, message: `Carrello svuotato` });
     }
 
     function handleShoppingListCopy() {
@@ -99,8 +97,7 @@ function ShoppingCart() {
         text += `TOTALE SPESA: €${total.toFixed(2)}`;
         const copyResult = copy(text, {message: "Lista salvata"});
         if (copyResult) {
-            const id = Date.now();
-            addToast({id: id, type: TYPES.info, message: `Lista della spesa copiata!` });
+            addToast({ type: TYPES.info, message: `Lista della spesa copiata!` });
         }
     }
 

@@ -25,13 +25,14 @@ function ToastProvider({ children }) {
     }
 
     function addToast(toast) {
-        if ('id' in toast && 'type' in toast && 'message' in toast) {
+        if ('type' in toast && 'message' in toast) {
+            if (!('id' in toast)) {
+                toast.id = Date.now();
+            }
             setToasts([ ...toasts, toast ]);
             setTimeout(() => {
                 removeToast(toast.id);
             }, 3000);
-        } else {
-            console.log('Toast not added', toast);
         }
     }
 

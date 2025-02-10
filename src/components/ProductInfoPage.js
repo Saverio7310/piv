@@ -57,12 +57,11 @@ function ProductInfoPage() {
 
     function handleAddProductToCart(selectedProduct) {
         const check = cart.findIndex((prod) => prod.getId === selectedProduct.getId);
-        const id = Date.now();
         if (check === -1) {
             handleAddProduct(selectedProduct);
-            addToast({ id: id, type: TYPES.success, message: `Prodotto aggiunto al carrello` });
+            addToast({ type: TYPES.success, message: `Prodotto aggiunto al carrello` });
         } else {
-            addToast({ id: id, type: TYPES.info, message: `Prodotto già nel carrello` });
+            addToast({ type: TYPES.info, message: `Prodotto già nel carrello` });
         }
     }
 
