@@ -13,7 +13,28 @@ h1 {
 }
 
 .landing-page-desc {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
     font-size: xx-large;
+}
+
+.landing-page-help {
+    padding: 20px;
+}
+
+.title-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.title-img {
+    width: 100%;
+    height: auto;
+}
+
+@media(max-width: 500px) {
+    .landing-page-desc {
+        font-size: larger;
+    }
 }

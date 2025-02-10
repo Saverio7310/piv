@@ -23,11 +23,15 @@
 .product-card-img {
     display: flex;
     justify-content: center;
+/*     max-width: 200px;
+    max-height: 200px; */
 }
 
 .product-card-image {
     padding-left: auto;
     padding-right: auto;
+    width: 100%;
+    height: 100%;
 }
 
 .product-card-title {
