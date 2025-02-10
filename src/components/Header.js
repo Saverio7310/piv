@@ -4,17 +4,27 @@ import { PiMagnifyingGlassThin, PiShoppingCartThin } from 'react-icons/pi';
 
 import { CartContext } from './CartProvider';
 
-import websiteLogo from '../images/propLogo.png';
+import websiteLogo from '../images/PIVLogo.png';
 
 import '../styles/Header.css';
+import { ToastContext } from './ToastProvider';
 
 function Header() {
     const [input, setInput] = useState("");
     const navigate = useNavigate()
     const { cart } = useContext(CartContext);
+    const { addToast, TYPES } = useContext(ToastContext)
 
     function handleSubmit(event) {
         event.preventDefault();
+        const id = Date.now();
+        if (input.length < 3) {
+            addToast({id: id, type: TYPES.warning, message: 'Nome prodotto troppo corto'});
+            return;
+        } else if (input.length > 50) {
+            addToast({id: id, type: TYPES.warning, message: 'Nome prodotto troppo lungo'});
+            return;
+        }
         setInput('');
         navigate('/products', { state: { searchQuery: input } });
     };
