@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SelectedProductContext } from "./SelectedProductProvider";
 
 import '../styles/ProductCard.css';
-import handleProductNameURI from "../utils/productURI";
+import getURI from "../utils/getURI";
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ function ProductCard({ product }) {
 
     function handleClick() {
         handleAddSelectedProduct(product);
-        const productURI = handleProductNameURI(product.getName);
+        const productURI = getURI(product.getName);
         navigate(`/products/${productURI}`);
     }
 

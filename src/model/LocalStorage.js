@@ -63,7 +63,7 @@ export default class LocalStorage {
                 valueToSave = this.#deleteProductFromShoppingCart(cart, product);
                 break;
             default:
-                console.log('TODO');
+                //TODO handle default case
                 break;
         }
         this.setValue(this.shoppingCartKey, valueToSave);

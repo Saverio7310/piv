@@ -5,13 +5,11 @@ import ProductCard from './ProductCard.js';
 
 import Product from '../model/Product.js';
 import SessionStorage from '../model/SessionStorage.js';
-import { createTestDataWithPrices } from "../utils/generatePropData";
 
-import testProdImg from '../images/propLogo.png';
+import testProdImg from '../images/nessuna_immagine_trasparente.png';
 
 import '../styles/ProductsListPage.css';
-import handleProductNameURI from '../utils/productURI.js';
-import printCurrentInfo from '../utils/logObject.js';
+import getURI from '../utils/getURI.js';
 
 function ProductsListPage() {
     /**
@@ -32,7 +30,6 @@ function ProductsListPage() {
      * the next request
      */
     useEffect(() => {
-        console.log('Effect starting - scroll');
         const handleScroll = () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
             const totalScrollableHeight = scrollHeight - clientHeight;
@@ -71,11 +68,9 @@ function ProductsListPage() {
      * from the sessionStorage
      */
     useEffect(() => {
-        console.log('Effect starting - Preloading');
         const data = SessionStorage.getProductList();
         if (data) {
             if (data.searchQuery === searchQuery && preloadingData.current) {
-                console.log('Session data', printCurrentInfo(data));
                 preloadingData.current = false
                 canFetch.current = false
                 hasJustPreload.current = true;
@@ -97,22 +92,19 @@ function ProductsListPage() {
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
-        console.log('Effect starting - fetch');
-        console.log('Iteration value', iteration);
 
         async function fetchData() {
             try {
-                const correctURI = handleProductNameURI(searchQuery);
-                const response = await fetch(`http://192.168.1.88:3030/api/v1/products/${correctURI}?offset=${iteration}&limit=${10}`, { signal });
+                const correctURI = getURI(searchQuery);
+                const URL = `${process.env.REACT_APP_API_URL}/api/v1/products/${correctURI}?offset=${iteration}&limit=${10}`;
+                const response = await fetch(URL, { signal });
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
-                console.log('Fetched data (products)', serverResponseObject);
                 if (data.length === 0)
                     return;
                 const dataObjects = data.map((prod) => {
                     return new Product(prod.product_id, prod.name, 'body description', prod.quantity_unit, prod.quantity_value, testProdImg, 1);
                 });
-                console.log('Fetched products array', printCurrentInfo(dataObjects));
                 setProductsFetched((prevProds) => {
                     return prevProds.concat(dataObjects);
                 });
@@ -138,14 +130,12 @@ function ProductsListPage() {
          *    variable, hasJustPreload, that makes the page skip the second fetch as well
          */
         if (canFetch.current) {
-            console.log('Fetching data');
             if (hasJustPreload.current) {
                 hasJustPreload.current = false;
                 return;
             }
             fetchData()
         } else {
-            console.log('Didn\'t fetch data');
             canFetch.current = true;
         }
 

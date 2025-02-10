@@ -10,7 +10,6 @@ import SessionStorage from "../model/SessionStorage";
 
 import '../styles/ProductInfoPage.css';
 import ProductPrices from "../model/ProductPrices";
-import printCurrentInfo from "../utils/logObject";
 
 function ProductInfoPage() {
     const { cart, handleAddProduct } = useContext(CartContext);
@@ -18,16 +17,13 @@ function ProductInfoPage() {
     const { selectedProduct, handleAddSelectedProduct } = useContext(SelectedProductContext);
 
     useEffect(() => {
-        console.log('Use Effect - Checking Product', printCurrentInfo(selectedProduct));
         if (selectedProduct)
             return;
         const product = SessionStorage.getSelectedProduct();
-        console.log('Preloaded product', printCurrentInfo(product));
         handleAddSelectedProduct(product);
     }, [handleAddSelectedProduct]);
 
     useEffect(() => {
-        console.log('Use Effect - Fetching Prices', printCurrentInfo(selectedProduct));
         if (selectedProduct && selectedProduct.getPrices.length !== 0) {
             return;
         }
@@ -35,10 +31,10 @@ function ProductInfoPage() {
         async function fetchData() {
             try {
                 const product_id = selectedProduct.getId;
-                const response = await fetch(`http://192.168.1.88:3030/api/v1/products/${product_id}/info`);
+                const URL = `${process.env.REACT_APP_API_URL}/api/v1/products/${product_id}/info`;
+                const response = await fetch(URL);
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
-                console.log('Fetched data (prices)', serverResponseObject);
                 const prices = new ProductPrices('Esselunga', 100);
                 data.map(obj => {
                     prices.addDate(obj.created_at)
@@ -67,12 +63,9 @@ function ProductInfoPage() {
             addToast({ id: id, type: TYPES.success, message: `Prodotto aggiunto al carrello` });
         } else {
             addToast({ id: id, type: TYPES.info, message: `Prodotto già nel carrello` });
-            console.log('Prodotto già presente nel carrello');
         }
     }
-    console.log(`
-    CHECKS:    
-    SELECTED PRODUCT:`, printCurrentInfo(selectedProduct));
+
     if (!selectedProduct || !selectedProduct?.getName || selectedProduct.getPrices.length === 0) {
         return (
             <main>

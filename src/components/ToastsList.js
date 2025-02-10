@@ -12,7 +12,6 @@ function ToastsList() {
             <ul className='toast-messages-list'>
                 {
                     toasts.map((toast) => {
-                        console.log(toast);
                         return (
                             <li key={toast.id} className={`toast-message-item ${toast.type}-toast`}>
                                 <div className="toast-message-content">

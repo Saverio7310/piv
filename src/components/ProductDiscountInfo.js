@@ -10,8 +10,6 @@ function ProductDiscountInfo({ product }) {
 
     const productPrices = product.getPrices;
 
-    console.log('Product Discount Info', productPrices);
-
     const handleTabClick = (index) => {
         setActiveTabIndex(index);
     };

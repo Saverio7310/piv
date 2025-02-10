@@ -40,14 +40,11 @@ export default class SessionStorage {
     static saveProductList(fetchedProducts) {
         const prodsList = this.getValue(this.productListKey);
         if (!prodsList) {
-            console.log('No products saved before')
             return this.setValue(this.productListKey, fetchedProducts);
         }
         if (prodsList.searchQuery !== fetchedProducts.searchQuery) {
-            console.log('Different searchQuery', prodsList.searchQuery, ', ', fetchedProducts.searchQuery)
             return this.setValue(this.productListKey, fetchedProducts);
         }
-        console.log('Equal searchQuery', prodsList.searchQuery, ', ', fetchedProducts.searchQuery)
         fetchedProducts.products = prodsList.products.concat(fetchedProducts.products);
         return this.setValue(this.productListKey, fetchedProducts);
     }
@@ -63,9 +60,7 @@ export default class SessionStorage {
         const list = this.getValue(this.productListKey);
         if (!list)
             return null;
-        console.log('Session Storage - Product String List', list);
         const prodArray = list.products.map((prod) => Product.createInstance(prod));
-        console.log('Session Storage - Product Object List', printCurrentInfo(prodArray));
         return {
             ...list,
             products: prodArray,
@@ -81,7 +76,6 @@ export default class SessionStorage {
      * @param {Product} prod 
      */
     static saveSelectedProduct(prod) {
-        console.log('Session Storage - Save Selected Product', printCurrentInfo(prod));
         this.setValue(this.selectedProductKey, prod);
     }
 

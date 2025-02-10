@@ -92,7 +92,6 @@ export default class Product {
     }
 
     addProperty(key, value) {
-        console.log('Product - Add Property', key, value);
         if (key !== 'prices') {
             const newKey = `set${key.at(0).toUpperCase()}${key.slice(1)}`;
             this[newKey] = value;

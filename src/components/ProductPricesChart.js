@@ -21,7 +21,6 @@ ChartJS.register(
 );
 
 function ProductPricesChart({ productPrice }) {
-    console.log('Product Prices Chart', productPrice);
     const unitPrices = productPrice.getUnitPrices;
     const prices = productPrice.getPrices;
     const discountedPrices = productPrice.getDiscountedPrices;
