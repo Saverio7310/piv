@@ -2,6 +2,7 @@
   "name": "piv",
   "version": "1.0.0",
   "private": true,
+  "homepage": "",
   "dependencies": {
     "chart.js": "^4.4.4",
     "copy-to-clipboard": "^3.3.3",
@@ -18,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "my-test": "mocha",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:frontend": "npx serve -s build -l 8080"
   },
   "eslintConfig": {
     "extends": [
