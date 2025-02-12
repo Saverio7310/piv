@@ -71,15 +71,13 @@ function ProductPricesChart({ productPrice }) {
             },
         ]
     };
-    const { minValue, maxValue } = productPrice.getMinMax();
     const options = {
         plugins: {
             legend: true
         },
         scales: {
             y: {
-                min: minValue,
-                max: maxValue,
+                min: 0
             }
         },
         interaction: {
