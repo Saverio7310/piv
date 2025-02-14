@@ -2,7 +2,7 @@
   "name": "piv",
   "version": "1.0.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://prezziinvista.onrender.com/",
   "dependencies": {
     "chart.js": "^4.4.4",
     "copy-to-clipboard": "^3.3.3",
@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
