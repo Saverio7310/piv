@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PiShoppingCartThin } from 'react-icons/pi';
 
 import { CartContext } from "./CartProvider";
@@ -10,8 +10,10 @@ import SessionStorage from "../model/SessionStorage";
 
 import '../styles/ProductInfoPage.css';
 import ProductPrices from "../model/ProductPrices";
+import LoadingMessage from "./LoadingMessage";
 
 function ProductInfoPage() {
+    const [loading, setLoading] = useState(false); 
     const { cart, handleAddProduct } = useContext(CartContext);
     const { addToast, TYPES } = useContext(ToastContext);
     const { selectedProduct, handleAddSelectedProduct } = useContext(SelectedProductContext);
@@ -43,6 +45,7 @@ function ProductInfoPage() {
                     prices.addDiscountedPrice(obj.discounted_price)
                     prices.addDiscountedUnitPrice(obj.discounted_unit_price)
                 });
+                setLoading(false);
                 const p = selectedProduct.clone();
                 p.addPrice(prices);
                 handleAddSelectedProduct(p);
@@ -51,6 +54,7 @@ function ProductInfoPage() {
             }
         }
         if (selectedProduct && selectedProduct.getPrices.length === 0) {
+            setLoading(true);
             fetchData()
         }
     }, []);
@@ -65,7 +69,7 @@ function ProductInfoPage() {
         }
     }
 
-    if (!selectedProduct || !selectedProduct?.getName || selectedProduct.getPrices.length === 0) {
+    if (!selectedProduct || !selectedProduct?.getName) {
         return (
             <main>
                 <div>
@@ -86,7 +90,6 @@ function ProductInfoPage() {
                         {selectedProduct.getName}
                         <span className="product-description">{selectedProduct.getQuantityValue} {selectedProduct.getQuantityUnit}</span>
                     </h1>
-                    {/* <p>{selectedProduct.getDescription}</p> */}
                     <div className="add-cart">
                         <button className="add-cart-button primary-button" onClick={() => handleAddProductToCart(selectedProduct)}>
                             <div className="add-cart-button-content">
@@ -96,7 +99,12 @@ function ProductInfoPage() {
                         </button>
                     </div>
                 </div>
-                <ProductDiscountInfo product={selectedProduct} />
+                { 
+                    loading ?
+                        <LoadingMessage message={'Caricamento prezzi in corso...'} />
+                    :
+                        <ProductDiscountInfo product={selectedProduct} />
+                }
             </div>
         </main>
     );

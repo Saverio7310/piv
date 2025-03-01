@@ -10,12 +10,14 @@ import testProdImg from '../images/nessuna_immagine_trasparente.png';
 
 import '../styles/ProductsListPage.css';
 import getURI from '../utils/getURI.js';
+import LoadingMessage from './LoadingMessage.js';
 
 function ProductsListPage() {
     /**
      * @type {[Array<Product>, React.Dispatch<React.SetStateAction<never[]>>]}
      */
     const [productsFetched, setProductsFetched] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [iteration, setIteration] = useState(0);
     const preloadingData = useRef(true);
     const canFetch = useRef(true);
@@ -100,8 +102,10 @@ function ProductsListPage() {
                 const response = await fetch(URL, { signal });
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
-                if (data.length === 0)
+                if (data.length === 0) {
+                    setLoading(false);
                     return;
+                }
                 const dataObjects = data.map((prod) => {
                     return new Product(prod.product_id, prod.name, 'body description', prod.quantity_unit, prod.quantity_value, testProdImg, 1);
                 });
@@ -113,6 +117,7 @@ function ProductsListPage() {
                     iteration: iteration,
                     products: dataObjects,
                 });
+                setLoading(false);
                 limitReached.current = false;
             } catch (error) {
                 console.error('Error while fetching products', error);
@@ -134,6 +139,7 @@ function ProductsListPage() {
                 hasJustPreload.current = false;
                 return;
             }
+            setLoading(true);
             fetchData()
         } else {
             canFetch.current = true;
@@ -142,6 +148,7 @@ function ProductsListPage() {
         return () => {
             try {
                 controller.abort();
+                setLoading(false);
             } catch (error) {
                 console.error('Error', error.name);
             }
@@ -182,11 +189,16 @@ function ProductsListPage() {
         <main>
             <div className='products-list-page'>
                 <div className="product-list-page-info">
-                    <h1 className='product-list-page-info-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
+                    {
+                        !loading && <h1 className='product-list-page-info-message'>Risultati della ricerca "{searchQuery}" ({productsFetched.length})</h1>
+                    }
                 </div>
                 <div className="products-list-page-grid">
                     {productsFetched.map((prod) => <ProductCard key={prod.getId} product={prod} />)}
                 </div>
+                {
+                    (loading && (productsFetched.length === 0 || productsFetched.length % 10 === 0)) && <LoadingMessage message={'Caricamento prodotti in corso...'} />
+                }
             </div>
         </main>
     );
