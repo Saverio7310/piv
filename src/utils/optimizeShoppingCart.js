@@ -28,11 +28,12 @@ function findMinimumPriceForProduct(product, supermarketsSet) {
     let isDiscounted = false;
     product.getPrices.forEach((price) => {
         if (supermarketsSet.has(price.getSupermarketName)) {
-            const latestPrice = price.getLatestPrice();
+            const isNowDiscounted = price.isNowDiscounted()
+            const latestPrice = price.getLatestPrice(isNowDiscounted);
             if (latestPrice < minPrice) {
                 supermarket = price.getSupermarketName;
                 minPrice = latestPrice;
-                isDiscounted = price.isNowDiscounted();
+                isDiscounted = isNowDiscounted;
             }
         }
     });
