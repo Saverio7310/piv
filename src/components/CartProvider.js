@@ -73,7 +73,7 @@ function CartProvider({ children }) {
             product: prod,
             count: count,
         });
-        const newProd = prod.clone();
+        const newProd = Product.create(prod);
         newProd.setCount = newProd.getCount + count;
         LocalStorage.saveShoppingCart('update', newProd);
     }
