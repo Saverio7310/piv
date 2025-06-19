@@ -5,15 +5,12 @@ export default class LocalStorage {
     static shoppingCartKey = 'ShoppingCart';
 
     static setValue(key, value) {
-        if (typeof value !== 'string')
-            value = JSON.stringify(value);
-        this.#storage.setItem(key, value);
+        this.#storage.setItem(key, JSON.stringify(value));
     }
 
     static getValue(key) {
         const elementString = this.#storage.getItem(key);
-        if (elementString)
-            return JSON.parse(elementString);
+        if (elementString) return JSON.parse(elementString);
         return null;
     }
 
@@ -73,7 +70,7 @@ export default class LocalStorage {
         const cart = this.getValue(this.shoppingCartKey);
         if (!cart)
             return null;
-        return cart.map((prod) => Product.createInstance(prod));
+        return cart.map(prod => Product.create(prod));
     }
 
     static clearShoppingCart() {
