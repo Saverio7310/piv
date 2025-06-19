@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import copy from 'copy-to-clipboard'
 
 import { CartContext } from "./CartProvider";
 import { ToastContext } from "./ToastProvider";
@@ -7,6 +6,7 @@ import ShoppingCartProductsList from "./ShoppingCartProductsList";
 import ShoppingCartSupermarketsSelection from "./ShoppingCartSupermarketsSelection";
 import ShoppingCartOptimizedList from "./ShoppingCartOptimizedList";
 import shoppingCartOptimization from "../utils/optimizeShoppingCart";
+import copyShoppingListToClipboard from "../utils/generateShoppingList";
 
 import Product from "../model/Product";
 import LocalStorage from "../model/LocalStorage";
@@ -22,8 +22,9 @@ function ShoppingCart() {
 
     useEffect(() => {
         const products = LocalStorage.getShoppingCart();
-        if (cart.length === 0 && Array.isArray(products) && products.length !== 0)
+        if (cart.length === 0 && Array.isArray(products) && products.length !== 0) {
             handleRestoreProducts(products);
+        }
     }, [cart.length, handleRestoreProducts]);
 
     function handleCheckboxChange(supermarketName, isChecked) {
@@ -65,10 +66,8 @@ function ShoppingCart() {
 
     function handleProductCountChange(prod, incrementValue) {
         const actualCount = prod.getCount;
-        if (incrementValue === -1 && actualCount === 1)
-            return;
-        if (incrementValue === 1 && actualCount === 20)
-            return;
+        if (incrementValue === -1 && actualCount === 1) return;
+        if (incrementValue === 1 && actualCount === 20) return;
         handleUpdateProduct(prod, incrementValue);
     }
 
@@ -78,27 +77,10 @@ function ShoppingCart() {
         addToast({ type: TYPES.success, message: `Carrello svuotato` });
     }
 
-    function handleShoppingListCopy() {
-        let text = '';
-        let total = 0;
-        optimizedShoppingCart.forEach(({ supermarketName, products }) => {
-            let partial = 0;
-            text += supermarketName + ':';
-            products.forEach((product) => {
-                const prod = cart.find((p) => p.getId === product.productID);
-                const line = `\n- ${prod.getName} x${prod.getCount}, €${(prod.getCount * product.minPrice).toFixed(2)}`;
-                text += line;
-                partial += product.minPrice * prod.getCount;
-            })
-            text += `\nPARZIALE: €${partial.toFixed(2)}\n\n`;
-            total += partial;
-            partial = 0;
-        })
-        text += `TOTALE SPESA: €${total.toFixed(2)}`;
-        const copyResult = copy(text, {message: "Lista salvata"});
-        if (copyResult) {
-            addToast({ type: TYPES.info, message: `Lista della spesa copiata!` });
-        }
+    function handleShoppingListCopyToClipboard() {
+        const success = copyShoppingListToClipboard(optimizedShoppingCart, cart);
+        if (success) addToast({ type: TYPES.info, message: 'Lista della spesa copiata!' });
+        else addToast({ type: TYPES.warning, message: 'Errore durante la copia della lista!' });
     }
 
     if (cart.length === 0) {
@@ -127,7 +109,7 @@ function ShoppingCart() {
                     optimizedShoppingCart.length !== 0 &&
                     <div className="shopping-cart-info-container lateral-padding">
                         <div className="copy-button-container">
-                            <button className="copy-button primary-button" onClick={handleShoppingListCopy}>Copia lista della spesa</button>
+                            <button className="copy-button primary-button" onClick={handleShoppingListCopyToClipboard}>Copia lista della spesa</button>
                         </div>
                     </div>
                 }
