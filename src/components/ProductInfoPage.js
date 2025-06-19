@@ -11,9 +11,10 @@ import SessionStorage from "../model/SessionStorage";
 import '../styles/ProductInfoPage.css';
 import ProductPrices from "../model/ProductPrices";
 import LoadingMessage from "./LoadingMessage";
+import Product from "../model/Product";
 
 function ProductInfoPage() {
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
     const { cart, handleAddProduct } = useContext(CartContext);
     const { addToast, TYPES } = useContext(ToastContext);
     const { selectedProduct, handleAddSelectedProduct } = useContext(SelectedProductContext);
@@ -33,21 +34,26 @@ function ProductInfoPage() {
         async function fetchData() {
             try {
                 const product_id = selectedProduct.getId;
-                const URL = `${process.env.REACT_APP_API_URL}/api/v1/products/${product_id}/info`;
-                const response = await fetch(URL);
+                const URL = `${process.env.REACT_APP_API_URL}/api/v2/products/${product_id}/info`;
+                const response = await fetch(URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        product_id: selectedProduct.getId,
+                        supermarkets: selectedProduct.getSupermarkets
+
+                    }),
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                });
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
-                const prices = new ProductPrices('Esselunga', 100);
+                const p = Product.create(selectedProduct);
                 data.map(obj => {
-                    prices.addDate(obj.created_at)
-                    prices.addPrice(obj.price)
-                    prices.addUnitPrice(obj.unit_price)
-                    prices.addDiscountedPrice(obj.discounted_price)
-                    prices.addDiscountedUnitPrice(obj.discounted_unit_price)
+                    const prices = ProductPrices.create(obj);
+                    p.addPrice(prices);
                 });
                 setLoading(false);
-                const p = selectedProduct.clone();
-                p.addPrice(prices);
                 handleAddSelectedProduct(p);
             } catch (error) {
                 console.error('Error while fetching prices', error);
@@ -99,10 +105,10 @@ function ProductInfoPage() {
                         </button>
                     </div>
                 </div>
-                { 
+                {
                     loading ?
                         <LoadingMessage message={'Caricamento prezzi in corso...'} />
-                    :
+                        :
                         <ProductDiscountInfo product={selectedProduct} />
                 }
             </div>

@@ -98,20 +98,23 @@ function ProductsListPage() {
         async function fetchData() {
             try {
                 const correctURI = getURI(searchQuery);
-                const URL = `${process.env.REACT_APP_API_URL}/api/v1/products/${correctURI}?offset=${iteration}&limit=${10}`;
-                const response = await fetch(URL, { signal });
+                const URL = `${process.env.REACT_APP_API_URL}/api/v2/products/${correctURI}?offset=${iteration}&limit=${10}`;
+                const response = await fetch(URL, { 
+                    signal,
+                    method: 'GET'
+                 });
                 const serverResponseObject = await response.json();
                 const { rowCount, data } = serverResponseObject;
                 if (data.length === 0) {
                     setLoading(false);
                     return;
                 }
-                const dataObjects = data.map((prod) => {
-                    return new Product(prod.product_id, prod.name, 'body description', prod.quantity_unit, prod.quantity_value, testProdImg, 1);
+                const dataObjects = data.map(prod => {
+                    const product = Product.create(prod);
+                    product.setImage = testProdImg;
+                    return product;
                 });
-                setProductsFetched((prevProds) => {
-                    return prevProds.concat(dataObjects);
-                });
+                setProductsFetched(prevProds => prevProds.concat(dataObjects));
                 SessionStorage.saveProductList({
                     searchQuery: searchQuery,
                     iteration: iteration,
