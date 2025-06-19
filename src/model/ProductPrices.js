@@ -1,74 +1,74 @@
 export default class ProductPrices {
     /**
      * 
-     * @param {string} supermarketName 
+     * @param {string} supermarket_name 
      * @param {number} weigth 
-     * @param {number[]} unitPrices 
+     * @param {number[]} unit_prices 
      * @param {number[]} prices 
-     * @param {number[]} discountedPrices 
-     * @param {number[]} discountedUnitPrices
+     * @param {number[]} discounted_prices 
+     * @param {number[]} discounted_unit_prices
      * @param {string[]} dates
      */
-    constructor(supermarketName, weigth, unitPrices, prices, discountedPrices, discountedUnitPrices, dates) {
-        this.supermarketName = supermarketName || '';
-        this.weigth = weigth || 1;
-        this.unitPrices = unitPrices || [];
-        this.prices = prices || [];
-        this.discountedPrices = discountedPrices || [];
-        this.discountedUnitPrices = discountedUnitPrices || [];
-        this.dates = dates || [];
+    constructor(supermarket_name, weigth, unit_prices, prices, discounted_prices, discounted_unit_prices, dates) {
+        this.supermarket_name = supermarket_name ?? 'supermarket';
+        this.weigth = weigth ?? 1;
+        this.unit_prices = unit_prices ?? [];
+        this.prices = prices ?? [];
+        this.discounted_prices = discounted_prices ?? [];
+        this.discounted_unit_prices = discounted_unit_prices ?? [];
+        this.dates = dates ?? [];
     }
 
     get getSupermarketName() {
-        return this.supermarketName;
+        return this.supermarket_name;
     }
 
     get getWeigth() {
         return this.weigth;
     }
     get getUnitPrices() {
-        return this.unitPrices;
+        return this.unit_prices;
     }
     get getPrices() {
         return this.prices;
     }
     get getDiscountedPrices() {
-        return this.discountedPrices;
+        return this.discounted_prices;
     }
 
     get getDiscountedUnitPrices() {
-        return this.discountedUnitPrices;
+        return this.discounted_unit_prices;
     }
 
     get getDates() {
         return this.dates;
     }
 
-    set setSupermarketName(supermarketName) {
-        this.supermarketName = supermarketName;
+    set setSupermarketName(supermarket_name) {
+        this.supermarket_name = supermarket_name;
     }
 
     set setWeigth(weigth) {
         this.weigth = weigth;
     }
 
-    set setUnitPrices(unitPrices) {
-        this.unitPrices = unitPrices;
+    set setUnitPrices(unit_prices) {
+        this.unit_prices = unit_prices;
     }
 
     set setPrices(prices) {
         this.prices = prices;
     }
 
-    set setDiscountedPrices(discountedPrices) {
-        this.discountedPrices = discountedPrices;
+    set setDiscountedPrices(discounted_prices) {
+        this.discounted_prices = discounted_prices;
     }
 
-    set setDiscountedUnitPrices(discountedUnitPrices) {
-        this.discountedUnitPrices = discountedUnitPrices;
+    set setDiscountedUnitPrices(discounted_unit_prices) {
+        this.discounted_unit_prices = discounted_unit_prices;
     }
 
-    set setDates(dates){
+    set setDates(dates) {
         this.dates = dates;
     }
 
@@ -77,15 +77,15 @@ export default class ProductPrices {
     }
 
     addDiscountedPrice(price) {
-        this.discountedPrices.push(price);
+        this.discounted_prices.push(price);
     }
 
     addUnitPrice(price) {
-        this.unitPrices.push(price);
+        this.unit_prices.push(price);
     }
 
     addDiscountedUnitPrice(price) {
-        this.discountedUnitPrices.push(price);
+        this.discounted_unit_prices.push(price);
     }
 
     addDate(date) {
@@ -95,9 +95,9 @@ export default class ProductPrices {
     getMinMax() {
         let minValue = Number.MAX_SAFE_INTEGER;
         let maxValue = Number.MIN_SAFE_INTEGER;
-        const len = this.unitPrices.length;
+        const len = this.unit_prices.length;
         for (let i = 0; i < len; i++) {
-            const el1 = this.unitPrices[i];
+            const el1 = this.unit_prices[i];
             const el2 = this.prices[i];
             minValue = Math.min(minValue, el1, el2);
             maxValue = Math.max(maxValue, el1, el2);
@@ -112,27 +112,27 @@ export default class ProductPrices {
             return acc + price
         }, 0) / (arrayToAVG.length);
     }
-    
+
     getAVGs() {
-        const unitPricesAVG = this.#getAVG(this.unitPrices);
+        const unitPricesAVG = this.#getAVG(this.unit_prices);
         const pricesAVG = this.#getAVG(this.prices);
         return { unitPricesAVG, pricesAVG };
     }
 
     getLatestPrice(nowDiscounted) {
         if (nowDiscounted)
-            return this.discountedPrices[this.prices.length - 1];
+            return this.discounted_prices[this.prices.length - 1];
         return this.prices[this.prices.length - 1];
     }
 
     getLatestUnitPrice(nowDiscounted) {
         if (nowDiscounted)
-            return this.discountedUnitPrices[this.prices.length - 1];
-        return this.unitPrices[this.unitPrices.length - 1];
+            return this.discounted_unit_prices[this.prices.length - 1];
+        return this.unit_prices[this.unit_prices.length - 1];
     }
 
     isNowDiscounted() {
-        return this.discountedPrices[this.discountedPrices.length - 1] !== -1 ? true : false;
+        return this.discounted_prices[this.discounted_prices.length - 1] !== -1 ? true : false;
     }
     getLatestReport() {
         const nowDiscounted = this.isNowDiscounted();
@@ -142,20 +142,35 @@ export default class ProductPrices {
             lastPrice: this.getLatestPrice(nowDiscounted),
         };
     }
-    addProperty(key, value) {
-        const newKey = `set${key.at(0).toUpperCase()}${key.slice(1)}`;
-        this[newKey] = value;
-    }
-    static createInstance(obj) {
-        const prices = new ProductPrices();
-        try {
-            for (const [key, value] of Object.entries(obj)) {
-                prices.addProperty(key, value);
-            }
-            return prices;
-        } catch (error) {
-            console.error('Parsing error', error);
+
+    /**
+     * Factory method that returns an instance of the class. The instance is created from the argument.
+     * If the arg is a ProductPrices instance, the result is a copy. If the arg is an object containing the
+     * required properties, the result is a new ProductPrices.
+     * @param {ProductPrices | Object} obj 
+     * @returns 
+     */
+    static create(obj) {
+        if (obj === null || obj === undefined) return new ProductPrices();
+        if (obj instanceof ProductPrices) {
+            return new ProductPrices(
+                obj.getSupermarketName,
+                obj.getWeigth,
+                obj.getUnitPrices,
+                obj.getPrices,
+                obj.getDiscountedPrices,
+                obj.getDiscountedUnitPrices,
+                obj.getDates
+            );
         }
-        return prices;
+        return new ProductPrices(
+            obj.supermarket_name,
+            obj.weigth,
+            obj.unit_prices,
+            obj.prices,
+            obj.discounted_prices,
+            obj.discounted_unit_prices,
+            obj.dates
+        );
     }
 }
