@@ -23,10 +23,13 @@ function ProductListItem({ type, prod, handleProductDeletion, minPrice, isDiscou
                     <>
                         <div className="product-list-item-element product-list-item-prices">
                             {prod.getPrices.map((price, index) => {
-                                const lastPrice = price.getLatestPrice();
                                 const nowDiscounted = price.isNowDiscounted();
+                                const lastPrice = price.getLatestPrice(nowDiscounted);
                                 return (
-                                    <p key={`product-prices-${index}`} className={`product-list-item-price ${nowDiscounted ? 'discount' : ''}`}>€{lastPrice.toFixed(2)}</p>
+                                        <p key={`product-prices-${index}`} className={`product-list-item-price ${nowDiscounted ? 'discount' : ''}`}>
+                                            <span className='product-list-item-supermarket'>{price.getSupermarketName}</span>
+                                            €{lastPrice.toFixed(2)}
+                                        </p>
                                 );
                             })}
                         </div> 

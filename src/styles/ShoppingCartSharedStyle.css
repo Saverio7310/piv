@@ -70,6 +70,15 @@
     -webkit-user-select: none;
 }
 
+.product-list-item-supermarket {
+    margin: 0;
+    padding-bottom: 0.5rem;
+    font-size: 16;
+    font-weight: bold;
+    display: block;
+    color: black;
+}
+
 .product-list-item-quantity {
     box-sizing: border-box;
     align-content: center;
