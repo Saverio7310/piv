@@ -1,4 +1,3 @@
-import printCurrentInfo from "../utils/logObject.js";
 import Product from "./Product.js";
 
 export default class SessionStorage {
@@ -9,15 +8,12 @@ export default class SessionStorage {
     static selectedProductKey = 'SelectedProduct';
 
     static setValue(key, value) {
-        if (typeof value !== 'string')
-            value = JSON.stringify(value);
-        this.#storage.setItem(key, value);
+        this.#storage.setItem(key, JSON.stringify(value));
     }
 
     static getValue(key) {
         const elementString = this.#storage.getItem(key);
-        if (elementString)
-            return JSON.parse(elementString);
+        if (elementString) return JSON.parse(elementString);
         return null;
     }
 
@@ -60,7 +56,7 @@ export default class SessionStorage {
         const list = this.getValue(this.productListKey);
         if (!list)
             return null;
-        const prodArray = list.products.map((prod) => Product.createInstance(prod));
+        const prodArray = list.products.map(prod => Product.create(prod));
         return {
             ...list,
             products: prodArray,
@@ -83,6 +79,6 @@ export default class SessionStorage {
         const prod = this.getValue(this.selectedProductKey);
         if (!prod)
             return null;
-        return Product.createInstance(prod);
+        return Product.create(prod);
     }
 }
