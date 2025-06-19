@@ -101,6 +101,7 @@ function ShoppingCart() {
                 {
                     optimizedShoppingCart.map(({ supermarketName, products }) =>
                         <ShoppingCartOptimizedList
+                            key={supermarketName}
                             supermarketName={supermarketName}
                             products={products}
                             handleProductCountChange={handleProductCountChange} />)

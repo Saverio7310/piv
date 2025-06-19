@@ -18,7 +18,7 @@ function ShoppingCartOptimizedList({ supermarketName, products, handleProductCou
                 {products.map(({ productID, minPrice, isDiscounted }) => {
                     const prod = cart.find((product) => product.getId === productID);
                     return (
-                        <ProductListItem type={0} prod={prod} minPrice={minPrice} isDiscounted={isDiscounted} handleProductCountChange={handleProductCountChange} />
+                        <ProductListItem key={prod.getId} type={0} prod={prod} minPrice={minPrice} isDiscounted={isDiscounted} handleProductCountChange={handleProductCountChange} />
                     );
                 })}
                 <div className="product-list-item shopping-cart-bill">
