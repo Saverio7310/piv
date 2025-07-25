@@ -3,7 +3,7 @@ import '../styles/LoadingMessage.css'
 function LoadingMessage({ message }) {
     return (
         <div className='loading-div'>
-            <h1 className='product-list-page-info-message'>{message}</h1>
+            <h1 className='loading-message'>{message}</h1>
             <div className='spinner'></div>
         </div>
     );
