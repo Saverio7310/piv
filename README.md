@@ -1,10 +1,8 @@
 # Prezzi in Vista
 **Prezzi in Vista** is currently the most ambitious project I’ve worked on. After months of development, I’ve built what I consider a solid MVP (Minimum Viable Product).  
-It is a **full-stack** featuring a front-end built with **React** and a back-end powered by **Node.js** and **Express.js**. The Server connects to a relational database (**PostgreSQL**) and with a cache layer (**Redis**).
+It is a **full-stack** project featuring a front-end built with **React** and a back-end powered by **Node.js** and **Express.js**. The Server connects to a relational database (**PostgreSQL**) and with a cache layer (**Redis**).
 
-<hr style="border: 0;">
-
-This repository stores the front-end side.
+This repository contains the front-end side.
 
 ## Index
 1. [Motivation](#motivation)
@@ -46,7 +44,7 @@ The project was created and managed with **CRA**. I used it for the first time a
 
 ## Structure
 The entire project relies on three major components: [ProductsListPage](src/components/ProductsListPage.js), [ProductInfoPage](src/components/ProductInfoPage.js) and [ShoppingCart](src/components/ShoppingCart.js).  
-These components are rendered on the three main pages of the website, respectively: `/products`, `/products/:productID` and `/shopping-cart`.  
+These components are rendered on the three main [pages](src/components/App.js#L16) of the website, respectively: `/products`, `/products/:productID` and `/shopping-cart`.  
 The first component is the one responsible for the connection to the Server and the products fetching. It takes the input value from the [Header](src/components/Header.js)'s search bar and makes an HTTP request after a local validation of the input (Minimum and maximum length). The result list is then displayed as an *infinite scrolling* grid of [Card](src/components/ProductCard.js)s. Clicking one of the displayed cards will redirect you to the second component.  
 The product's info page contains the product's data (fetched with an effect) with the help of many inner components. An image (which I guess I cannot actually show due to copyright and license), name, weight, [prices chart](src/components/ProductPricesChart.js) displaying the prices over time (if available), a brief [description](src/components/ProductPriceInfo.js) of the current price situation and a button that adds the product to the shopping cart.  
 At the top-right corner of the header there is a shopping cart icon. Clicking this icon takes you to the third component. Here you will see the [list](src/components/ShoppingCartProductsList.js) of all the products added to the cart and a [selection](src/components/ShoppingCartSupermarketsSelection.js) of the available supermarkets. After selecting your favourite ones and pressing the button *Ottimizza*, a new list will be generated. This [optimized list](src/components/ShoppingCartOptimizedList.js) will divide the products in different sections. Each section represents a supermarket and all the products available at a lower price than the other supermarkets. You can, then, click the button below the list to generate a shopping list text message which is copied to the clipboard.
